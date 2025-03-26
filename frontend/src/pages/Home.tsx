@@ -1,8 +1,12 @@
 import Hero from "../components/Hero/Hero";
+import ValueCards from "../components/ValueCards/ValueCards";
 
 function Home(){
     return(
-        <Hero/>
+        <>
+            <Hero/>
+            <ValueCards/>
+        </>
     )
 }
 export default Home;

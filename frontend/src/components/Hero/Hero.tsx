@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { DirectionCardButton } from "../Buttons/DirectionCardButton";
 
+
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
@@ -51,8 +52,13 @@ function Hero() {
           </span>
           <span>to someone</span>
         </h1>
+        
+      </div>
+   
+      <div className="flex justify-center items-center mt-6 w-full">
         <DirectionCardButton />
       </div>
+     
       <div className="flex flex-row gap-3"></div>
     </div>
   );
