@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  meet_db:
+    image: "postgres:13"
+    restart: always
+    environment:
+      POSTGRES_DB: '${DB_DATABASE}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - meet-data:/var/lib/postgresql/data
+    networks:
+      - meet-network
+
+  meet_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://hackathon:${DB_PORT}/${DB_DATABASE}
+      - spring.datasource.username=${DB_USER}
+      - spring.datasource.password=${DB_PASSWORD}
+    depends_on:
+      - meet_db
+    networks:
+      - meet-network
+    links:
+      - meet_db
+
+networks:
+  meet-network:
+    driver: bridge
+
+volumes:
+  meet-data:
+    driver: local
