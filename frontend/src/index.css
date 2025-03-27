@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 
-/* index.css ou App.css */
 body {
   background: linear-gradient(to right, #120e61, #f76d02)
 }

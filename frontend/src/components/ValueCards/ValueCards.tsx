@@ -20,6 +20,7 @@ const ValueCards: React.FC = () => {
     "Animações",
   ];
 
+
   return (
     <div className="w-full py-[10rem] px-4">
       <div className="max-w-[1240px] mx-auto grid md:grid-cols-3 gap-8">
@@ -47,6 +48,7 @@ const ValueCards: React.FC = () => {
           buttonText="Comprar Agora"
           buttonColor="[#f76d02]"
         />
+
       </div>
     </div>
   );

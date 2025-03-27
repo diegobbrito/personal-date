@@ -13,7 +13,6 @@ const ValueCard: React.FC<ValueCardProps> = ({
   price,
   features,
   buttonText,
-  buttonColor,
 }) => {
   return (
     <div className="w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300 bg-white">
@@ -27,7 +26,7 @@ const ValueCard: React.FC<ValueCardProps> = ({
         ))}
       </div>
       <button
-        className={`bg-${buttonColor} text-white w-[200px] rounded-md font-medium my-6 mx-auto px-6 py-3 self-end`}
+        className={`bg-[#f76d02] text-white w-[200px] rounded-md font-medium my-6 mx-auto px-6 py-3 self-end`}
       >
         {buttonText}
       </button>
