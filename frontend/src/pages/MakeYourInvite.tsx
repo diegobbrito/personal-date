@@ -76,36 +76,38 @@ const MakeYourInvite: React.FC = () => {
                 placeholder="Quem quer enviar esse convite?"
               />
             </div>
-            <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="eventDate"
-              >
-                Data do Evento
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                id="eventDate"
-                name="eventDate"
-                type="date"
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="eventTime"
-              >
-                Hora do Evento
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                id="eventTime"
-                name="eventTime"
-                type="time"
-                value={formData.eventTime}
-                onChange={handleChange}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  className="block text-white font-bold mb-2 text-sm"
+                  htmlFor="eventDate"
+                >
+                  Data do Evento
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  id="eventDate"
+                  name="eventDate"
+                  type="date"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-white font-bold mb-2 text-sm"
+                  htmlFor="eventTime"
+                >
+                  Hora do Evento
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  id="eventTime"
+                  name="eventTime"
+                  type="time"
+                  value={formData.eventTime}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
             <div>
               <label
