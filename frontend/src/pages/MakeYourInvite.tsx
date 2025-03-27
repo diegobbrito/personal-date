@@ -19,10 +19,15 @@ const MakeYourInvite: React.FC = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (value) {
+      const [year, month, day] = value.split("-");
+      const formattedDate = `${day}/${month}/${year}`;
+      
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: name === "eventDate" ? formattedDate : value,
+      }));
+    }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -32,23 +37,20 @@ const MakeYourInvite: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start gap-3 py-10 lg:py-40 px-4 sm:px-0 mx-auto w-full max-w-screen-xl">
+      <div className="flex flex-col items-center justify-start py-5 lg:py-20 px-2 sm:px-0 mx-auto w-full">
         <h1 className="text-5xl md:text-7xl tracking-tighter text-white font-mono text-center">
           Crie seu Convite!
         </h1>
       </div>
-      <div className="flex justify-start mx-10 sm:mx-20 md:mx-40 lg:mx-60 xl:mx-80 ">
+      <div className="flex justify-start mx-5 sm:mx-10 md:mx-20 lg:mx-30">
         <div className="w-full max-w-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="sender"
-              >
+              <label className="block text-white font-bold mb-2 text-sm" htmlFor="sender">
                 Remetente
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                 id="sender"
                 name="sender"
                 type="text"
@@ -57,12 +59,8 @@ const MakeYourInvite: React.FC = () => {
                 placeholder="Quem quer enviar esse convite?"
               />
             </div>
-
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="eventDate"
-              >
+              <label className="block text-white font-bold mb-2 text-sm" htmlFor="eventDate">
                 Data do Evento
               </label>
               <input
@@ -70,16 +68,11 @@ const MakeYourInvite: React.FC = () => {
                 id="eventDate"
                 name="eventDate"
                 type="date"
-                value={formData.eventDate}
                 onChange={handleChange}
               />
             </div>
-
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="eventTime"
-              >
+              <label className="block text-white font-bold mb-2 text-sm" htmlFor="eventTime">
                 Hora do Evento
               </label>
               <input
@@ -91,12 +84,8 @@ const MakeYourInvite: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
-
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="message"
-              >
+              <label className="block text-white font-bold mb-2 text-sm" htmlFor="message">
                 Mensagem
               </label>
               <textarea
@@ -109,16 +98,24 @@ const MakeYourInvite: React.FC = () => {
                 rows={4}
               />
             </div>
-
-            <div>
+            <div className="mb-10">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Criar Convite
               </button>
             </div>
           </form>
+        </div>
+        <div className="w-full mx-auto max-w-lg bg-white p-4 rounded-3xl shadow-lg">
+          <h2 className="text-xl font-bold mb-4">Convite</h2>
+          <div className="space-y-2">
+            <p>Nome: {formData.sender}</p>
+            <p>Data: {formData.eventDate}</p>
+            <p>Horário: {formData.eventTime}</p>
+            <p>Texto: {formData.message}</p>
+          </div>
         </div>
       </div>
     </>
