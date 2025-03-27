@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meet
+  labels:
+    app: meet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meet
+  template:
+    metadata:
+      labels:
+        app: meet
+    spec:
+      containers:
+        - name: meet
+          image: diegobbrito17/hackaton-team-3:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: db_database
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: db_password
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: db_port
+            - name: DB_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: db_server
