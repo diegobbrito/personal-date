@@ -19,18 +19,18 @@ const MakeYourInvite: React.FC = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-  
+
     if (name === "eventDate") {
       const [year, month, day] = value.split("-");
       const selectedDate = new Date(`${year}-${month}-${day}`);
       const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0); 
-  
+      currentDate.setHours(0, 0, 0, 0);
+
       if (selectedDate < currentDate) {
         alert("Você não pode selecionar uma data anterior ao dia atual.");
         return;
       }
-  
+
       const formattedDate = `${day}/${month}/${year}`;
       setFormData((prevData) => ({
         ...prevData,
@@ -60,7 +60,10 @@ const MakeYourInvite: React.FC = () => {
         <div className="w-full max-w-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-white font-bold mb-2 text-sm" htmlFor="sender">
+              <label
+                className="block text-white font-bold mb-2 text-sm"
+                htmlFor="sender"
+              >
                 Remetente
               </label>
               <input
@@ -74,7 +77,10 @@ const MakeYourInvite: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-white font-bold mb-2 text-sm" htmlFor="eventDate">
+              <label
+                className="block text-white font-bold mb-2 text-sm"
+                htmlFor="eventDate"
+              >
                 Data do Evento
               </label>
               <input
@@ -86,7 +92,10 @@ const MakeYourInvite: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-white font-bold mb-2 text-sm" htmlFor="eventTime">
+              <label
+                className="block text-white font-bold mb-2 text-sm"
+                htmlFor="eventTime"
+              >
                 Hora do Evento
               </label>
               <input
@@ -99,7 +108,10 @@ const MakeYourInvite: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-white font-bold mb-2 text-sm" htmlFor="message">
+              <label
+                className="block text-white font-bold mb-2 text-sm"
+                htmlFor="message"
+              >
                 Mensagem
               </label>
               <textarea
@@ -109,7 +121,7 @@ const MakeYourInvite: React.FC = () => {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Escreva sua mensagem de convite aqui..."
-                rows={4}
+                rows={6}
               />
             </div>
             <div className="mb-10">
@@ -122,13 +134,16 @@ const MakeYourInvite: React.FC = () => {
             </div>
           </form>
         </div>
-        <div className="w-full mx-auto max-w-lg bg-white p-4 rounded-3xl shadow-lg">
-          <h2 className="text-xl font-bold mb-4">Convite</h2>
-          <div className="space-y-2">
+        <div className="w-full mx-auto max-w-lg bg-white p-4 rounded-3xl shadow-lg flex flex-col items-center space-y-4">
+          <h2 className="text-xl font-bold">Convite</h2>
+          <div className="flex flex-col items-center space-y-4">
             <p>Nome: {formData.sender}</p>
-            <p>Data: {formData.eventDate}</p>
-            <p>Horário: {formData.eventTime}</p>
-            <p>Texto: {formData.message}</p>
+            <div className="flex flex-row items-center space-x-4">
+              <p>Data: {formData.eventDate}</p>
+              <p>Horário: {formData.eventTime}</p>
+            </div>
+            <p> Mensagem:</p>
+            <p className="text-center mt-4">{formData.message}</p>
           </div>
         </div>
       </div>
