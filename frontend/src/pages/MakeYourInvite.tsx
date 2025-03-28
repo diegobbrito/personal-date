@@ -5,6 +5,7 @@ interface InviteFormData {
   eventDate: string;
   eventTime: string;
   message: string;
+  address: string;
 }
 
 const MakeYourInvite: React.FC = () => {
@@ -13,6 +14,7 @@ const MakeYourInvite: React.FC = () => {
     eventDate: "",
     eventTime: "",
     message: "",
+    address: ""
   });
 
   const handleChange = (
@@ -73,6 +75,24 @@ const MakeYourInvite: React.FC = () => {
                 name="sender"
                 type="text"
                 value={formData.sender}
+                onChange={handleChange}
+                placeholder="Endereço"
+              />
+            </div>
+
+            <div>
+              <label
+                className="block text-white font-bold mb-2 text-sm"
+                htmlFor="sender"
+              >
+                Endereço
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                id="address"
+                name="address"
+                type="text"
+                value={formData.address}
                 onChange={handleChange}
                 placeholder="Quem quer enviar esse convite?"
               />
@@ -144,11 +164,12 @@ const MakeYourInvite: React.FC = () => {
         <div className="w-full lg:w-1/2 max-w-lg bg-white p-4 rounded-3xl shadow-lg lg:ml-5 flex flex-col items-center space-y-4 mb-8 lg:mb-0">
           <h2 className="text-xl font-bold">Convite</h2>
           <div className="flex flex-col items-center space-y-4 w-full">
-            <p>Nome: {formData.sender}</p>
+            <p>Nome: {formData.sender || "XXXXXXXXXX" }</p>
             <div className="flex flex-row items-center space-x-4">
               <p>Data: {formData.eventDate || "DD/MM/AAAA"}</p>
               <p>Horário: {formData.eventTime || "XX:XX"}</p>
             </div>
+            <p> Endereço: {formData.address || "XXXXXXXXXX"} </p>
             <p className="font-semibold">Mensagem:</p>
             <div className="w-full">
               <p className="mt-2 p-2 bg-gray-50 rounded break-words whitespace-pre-line min-h-[100px] overflow-auto w-full">
