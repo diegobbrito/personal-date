@@ -141,7 +141,7 @@ const MakeYourInvite: React.FC = () => {
           </form>
         </div>
         
-        <div className="w-full lg:w-1/4 max-w-lg bg-white p-4 rounded-3xl shadow-lg flex flex-col items-center space-y-4 mb-8 lg:mb-0">
+        <div className="w-full lg:w-1/2 max-w-lg bg-white p-4 rounded-3xl shadow-lg lg:ml-5 flex flex-col items-center space-y-4 mb-8 lg:mb-0">
           <h2 className="text-xl font-bold">Convite</h2>
           <div className="flex flex-col items-center space-y-4">
             <p>Nome: {formData.sender}</p>
