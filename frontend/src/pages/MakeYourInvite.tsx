@@ -85,15 +85,12 @@ const MakeYourInvite: React.FC = () => {
       <div className="flex flex-col items-center py-5 px-4 sm:px-6 md:px-8 w-full max-w-screen-lg mx-auto lg:flex-row">
         <div className="w-full lg:w-1/2 max-w-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="sender"
-              >
+          <div>
+              <label className="block text-white font-bold mb-2" htmlFor="sender">
                 Remetente
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded w-full py-3 px-3 text-white"
                 id="sender"
                 name="sender"
                 type="text"
@@ -104,14 +101,11 @@ const MakeYourInvite: React.FC = () => {
             </div>
 
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="address"
-              >
+              <label className="block text-white font-bold mb-2" htmlFor="address">
                 Endereço
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded w-full py-3 px-3 text-white"
                 id="address"
                 name="address"
                 type="text"
@@ -123,14 +117,11 @@ const MakeYourInvite: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label
-                  className="block text-white font-bold mb-2 text-sm"
-                  htmlFor="eventDate"
-                >
+                <label className="block text-white font-bold mb-2" htmlFor="eventDate">
                   Data do Evento
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="border rounded w-full py-2 px-3 text-white"
                   id="eventDate"
                   name="eventDate"
                   type="date"
@@ -138,14 +129,11 @@ const MakeYourInvite: React.FC = () => {
                 />
               </div>
               <div>
-                <label
-                  className="block text-white font-bold mb-2 text-sm"
-                  htmlFor="eventTime"
-                >
+                <label className="block text-white font-bold mb-2" htmlFor="eventTime">
                   Hora do Evento
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="border rounded w-full py-2 px-3 text-white"
                   id="eventTime"
                   name="eventTime"
                   type="time"
@@ -156,25 +144,18 @@ const MakeYourInvite: React.FC = () => {
             </div>
 
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="fontFamily"
-              >
+              <label className="block text-white font-bold mb-2" htmlFor="fontFamily">
                 Fonte do Convite
               </label>
               <select
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded w-full py-2 px-3 text-white"
                 id="fontFamily"
                 name="fontFamily"
                 value={formData.fontFamily}
                 onChange={handleChange}
               >
                 {fontOptions.map((font) => (
-                  <option
-                    key={font.value}
-                    value={font.value}
-                    className="text-black"
-                  >
+                  <option value={font.value} key={font.value} className="text-black">
                     {font.label}
                   </option>
                 ))}
@@ -182,19 +163,16 @@ const MakeYourInvite: React.FC = () => {
             </div>
 
             <div>
-              <label
-                className="block text-white font-bold mb-2 text-sm"
-                htmlFor="message"
-              >
+              <label className="block text-white font-bold mb-2" htmlFor="message">
                 Mensagem
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                className="border rounded w-full py-2 px-3 text-white"
                 id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Escreva sua mensagem de convite aqui..."
+                placeholder="Escreva sua mensagem..."
                 rows={6}
               />
             </div>
