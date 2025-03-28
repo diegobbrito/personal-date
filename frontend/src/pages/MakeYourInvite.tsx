@@ -51,13 +51,14 @@ const MakeYourInvite: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start py-5 lg:py-20 px-2 sm:px-0 mx-auto w-full">
+      <div className="flex flex-col items-center justify-start py-5 lg:py-20 px-4 sm:px-6 mx-auto w-full">
         <h1 className="text-5xl md:text-7xl tracking-tighter text-white font-mono text-center">
           Crie seu Convite!
         </h1>
       </div>
-      <div className="flex justify-start mx-5 sm:mx-10 md:mx-20 lg:mx-30">
-        <div className="w-full max-w-lg">
+      
+      <div className="flex flex-col lg:flex-row gap-8 px-4 sm:px-6 mx-auto w-full max-w-7xl">
+        <div className="w-full lg:w-1/2 max-w-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
@@ -76,6 +77,7 @@ const MakeYourInvite: React.FC = () => {
                 placeholder="Quem quer enviar esse convite?"
               />
             </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
@@ -109,6 +111,7 @@ const MakeYourInvite: React.FC = () => {
                 />
               </div>
             </div>
+            
             <div>
               <label
                 className="block text-white font-bold mb-2 text-sm"
@@ -126,6 +129,7 @@ const MakeYourInvite: React.FC = () => {
                 rows={6}
               />
             </div>
+            
             <div className="mb-10">
               <button
                 type="submit"
@@ -136,7 +140,8 @@ const MakeYourInvite: React.FC = () => {
             </div>
           </form>
         </div>
-        <div className="w-full mx-auto max-w-lg bg-white p-4 rounded-3xl shadow-lg flex flex-col items-center space-y-4">
+        
+        <div className="w-full lg:w-1/4 max-w-lg bg-white p-4 rounded-3xl shadow-lg flex flex-col items-center space-y-4 mb-8 lg:mb-0">
           <h2 className="text-xl font-bold">Convite</h2>
           <div className="flex flex-col items-center space-y-4">
             <p>Nome: {formData.sender}</p>
