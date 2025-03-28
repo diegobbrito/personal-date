@@ -6,7 +6,20 @@ interface InviteFormData {
   eventTime: string;
   message: string;
   address: string;
+  fontFamily: string;
 }
+
+const fontOptions = [
+  { value: "Arial, sans-serif", label: "Arial" },
+  { value: "'Times New Roman', serif", label: "Times New Roman" },
+  { value: "'Courier New', monospace", label: "Courier New" },
+  { value: "'Georgia', serif", label: "Georgia" },
+  {
+    value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+    label: "Palatino",
+  },
+  { value: "'Brush Script MT', cursive", label: "Brush Script" },
+];
 
 const MakeYourInvite: React.FC = () => {
   const [formData, setFormData] = useState<InviteFormData>({
@@ -14,11 +27,12 @@ const MakeYourInvite: React.FC = () => {
     eventDate: "",
     eventTime: "",
     message: "",
-    address: ""
+    address: "",
+    fontFamily: "Arial, sans-serif",
   });
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
@@ -33,7 +47,10 @@ const MakeYourInvite: React.FC = () => {
         return;
       }
 
+      
+
       const formattedDate = `${day}/${month}/${year}`;
+      
       setFormData((prevData) => ({
         ...prevData,
         [name]: formattedDate,
@@ -59,7 +76,7 @@ const MakeYourInvite: React.FC = () => {
         </h1>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 px-4 sm:px-6 mx-auto w-full max-w-7xl">
+      <div className="flex flex-col items-center py-5 px-4 sm:px-6 md:px-8 w-full max-w-screen-lg mx-auto lg:flex-row">
         <div className="w-full lg:w-1/2 max-w-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -76,14 +93,14 @@ const MakeYourInvite: React.FC = () => {
                 type="text"
                 value={formData.sender}
                 onChange={handleChange}
-                placeholder="Endereço"
+                placeholder="Quem quer enviar esse convite?"
               />
             </div>
 
             <div>
               <label
                 className="block text-white font-bold mb-2 text-sm"
-                htmlFor="sender"
+                htmlFor="address"
               >
                 Endereço
               </label>
@@ -94,7 +111,7 @@ const MakeYourInvite: React.FC = () => {
                 type="text"
                 value={formData.address}
                 onChange={handleChange}
-                placeholder="Quem quer enviar esse convite?"
+                placeholder="Endereço do evento"
               />
             </div>
 
@@ -135,6 +152,28 @@ const MakeYourInvite: React.FC = () => {
             <div>
               <label
                 className="block text-white font-bold mb-2 text-sm"
+                htmlFor="fontFamily"
+              >
+                Fonte do Convite
+              </label>
+              <select
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                id="fontFamily"
+                name="fontFamily"
+                value={formData.fontFamily}
+                onChange={handleChange}
+              >
+                {fontOptions.map((font) => (
+                  <option key={font.value} value={font.value}>
+                    {font.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label
+                className="block text-white font-bold mb-2 text-sm"
                 htmlFor="message"
               >
                 Mensagem
@@ -161,18 +200,21 @@ const MakeYourInvite: React.FC = () => {
           </form>
         </div>
 
-        <div className="w-full lg:w-1/2 max-w-lg bg-white p-4 rounded-3xl shadow-lg lg:ml-5 flex flex-col items-center space-y-4 mb-8 lg:mb-0">
-          <h2 className="text-xl font-bold">Convite</h2>
+        <div
+          className="w-full lg:w-1/2 bg-white p-6 rounded-3xl shadow-lg lg:ml-15 flex flex-col items-center space-y-4 mb-8 lg:mb-0 "
+          style={{ fontFamily: formData.fontFamily }}
+        >
+          <h2 className="text-2xl font-bold">Convite</h2>
           <div className="flex flex-col items-center space-y-4 w-full">
-            <p>Nome: {formData.sender || "XXXXXXXXXX" }</p>
+            <p>Nome: {formData.sender || "XXXXXXXXXX"}</p>
             <div className="flex flex-row items-center space-x-4">
               <p>Data: {formData.eventDate || "DD/MM/AAAA"}</p>
               <p>Horário: {formData.eventTime || "XX:XX"}</p>
             </div>
-            <p> Endereço: {formData.address || "XXXXXXXXXX"} </p>
+            <p>Endereço: {formData.address || "XXXXXXXXXX"}</p>
             <p className="font-semibold">Mensagem:</p>
             <div className="w-full">
-              <p className="mt-2 p-2 bg-gray-50 rounded break-words whitespace-pre-line min-h-[100px] overflow-auto w-full">
+              <p className="mt-2 p-4 bg-gray-50 rounded break-words whitespace-pre-line min-h-[400px] overflow-auto w-full">
                 {formData.message || "Nenhuma mensagem informada"}
               </p>
             </div>
