@@ -35,19 +35,19 @@ const MakeYourInvite: React.FC = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-  
+
     if (name === "eventDate") {
       const [year, month, day] = value.split("-");
       const selectedDate = new Date(`${year}-${month}-${day}`);
       const currentDate = new Date();
       currentDate.setHours(0, 0, 0, 0);
-  
+
       if (selectedDate < currentDate) {
         alert("Você não pode selecionar uma data anterior ao dia atual.");
         return;
       }
-  
-     
+
+      // Check if any date component is undefined
       if (day === undefined || month === undefined || year === undefined) {
         setFormData((prevData) => ({
           ...prevData,
@@ -55,7 +55,7 @@ const MakeYourInvite: React.FC = () => {
         }));
         return;
       }
-  
+
       const formattedDate = `${day}/${month}/${year}`;
       setFormData((prevData) => ({
         ...prevData,
@@ -170,7 +170,11 @@ const MakeYourInvite: React.FC = () => {
                 onChange={handleChange}
               >
                 {fontOptions.map((font) => (
-                  <option key={font.value} value={font.value}>
+                  <option
+                    key={font.value}
+                    value={font.value}
+                    className="text-black"
+                  >
                     {font.label}
                   </option>
                 ))}
