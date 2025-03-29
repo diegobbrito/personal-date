@@ -14,32 +14,49 @@ interface InviteFormData {
   fontFamily: string;
   border?: string;
   borderColor?: string;
-  specialBorder?: string;
+  template: string; 
 }
+
+const templateOptions = [
+  { value: 'classic', label: 'Clássico' },
+  { value: 'modern', label: 'Moderno' },
+  { value: 'elegant', label: 'Elegante' },
+  { value: 'fun', label: 'Divertido' },
+];
 
 const fontOptions = [
   { value: "Arial, sans-serif", label: "Arial" },
   { value: "'Times New Roman', serif", label: "Times New Roman" },
   { value: "'Courier New', monospace", label: "Courier New" },
   { value: "'Georgia', serif", label: "Georgia" },
-  { value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif", label: "Palatino" },
+  {
+    value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+    label: "Palatino",
+  },
   { value: "'Brush Script MT', cursive", label: "Brush Script" },
 ];
 
 const MakeYourInvite: React.FC = () => {
-  const [selectedPackage, setSelectedPackage] = useState<"simple" | "complete">("simple");
-  const [formData, setFormData] = useState<InviteFormData[]>([{
-    sender: "",
-    eventDate: "",
-    eventTime: "",
-    message: "",
-    address: "",
-    fontFamily: "Arial, sans-serif",
-    border: "no",
-  }]);
+  const [selectedPackage, setSelectedPackage] = useState<"simple" | "complete">(
+    "simple"
+  );
+  const [formData, setFormData] = useState<InviteFormData[]>([
+    {
+      sender: "",
+      eventDate: "",
+      eventTime: "",
+      message: "",
+      address: "",
+      fontFamily: "Arial, sans-serif",
+      border: "no",
+      template: "classic",
+    },
+  ]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
     index: number
   ) => {
     const { name, value } = e.target;
@@ -56,7 +73,16 @@ const MakeYourInvite: React.FC = () => {
       packageType === "complete"
         ? [
             { ...formData[0] },
-            { sender: "", eventDate: "", eventTime: "", message: "", address: "", fontFamily: "Arial, sans-serif", border: "no" },
+            {
+              sender: "",
+              eventDate: "",
+              eventTime: "",
+              message: "",
+              address: "",
+              fontFamily: "Arial, sans-serif",
+              border: "no",
+              template: "classic",
+            },
           ]
         : [formData[0]]
     );
@@ -74,17 +100,24 @@ const MakeYourInvite: React.FC = () => {
           Crie seu Convite!
         </h1>
       </div>
-    
-      <PackageSelector onSelectPackage={handleSelectPackage} selectedPackage={selectedPackage} />
+
+      <PackageSelector
+        onSelectPackage={handleSelectPackage}
+        selectedPackage={selectedPackage}
+      />
 
       <div className="flex flex-col lg:flex-row items-start justify-center gap-8 py-8 px-4 sm:px-6 md:px-8 w-full max-w-7xl mx-auto">
-
         <div className="w-full lg:w-1/2 max-w-2xl bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
             {formData.map((invite, index) => (
-              <div key={index} className="border border-white/20 p-6 mb-6 rounded-lg bg-white/5">
-                <h2 className="text-white text-xl font-bold mb-4">Convite {index + 1}</h2>
-                
+              <div
+                key={index}
+                className="border border-white/20 p-6 mb-6 rounded-lg bg-white/5"
+              >
+                <h2 className="text-white text-xl font-bold mb-4">
+                  Convite {index + 1}
+                </h2>
+
                 <InviteInputField
                   label="Remetente"
                   id={`sender-${index}`}
@@ -132,6 +165,15 @@ const MakeYourInvite: React.FC = () => {
                   options={fontOptions}
                 />
 
+                <InviteSelectField
+                  label="Modelo do Convite"
+                  id={`template-${index}`}
+                  name="template"
+                  value={invite.template}
+                  onChange={(e) => handleChange(e, index)}
+                  options={templateOptions}
+                />
+
                 <InviteTextAreaField
                   label="Mensagem Personalizada"
                   id={`message-${index}`}
@@ -156,7 +198,9 @@ const MakeYourInvite: React.FC = () => {
         <div className="w-full lg:w-1/2 flex flex-col items-center space-y-8 sticky top-8">
           {formData.map((invite, index) => (
             <div key={index} className="w-full max-w-2xl">
-              <h3 className="text-white text-xl font-bold mb-4 text-center">Prévia do Convite {index + 1}</h3>
+              <h3 className="text-white text-xl font-bold mb-4 text-center">
+                Prévia do Convite {index + 1}
+              </h3>
               <InvitePreview formData={invite} />
             </div>
           ))}
