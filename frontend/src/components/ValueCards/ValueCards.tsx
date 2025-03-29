@@ -3,30 +3,22 @@ import ValueCard from "./ValueCard/Card";
 
 const ValueCards: React.FC = () => {
   const basicFeatures: string[] = [
-    "Convites estáticos",
+    "Única opção de convite",
     "Templates limitados",
-    "Personalização simples",
+    "Convite enviado por QRCode",
   ];
 
   const intermediateFeatures: string[] = [
-    "Convites dinâmicos",
+    "Mais opções de convite",
     "Mais templates",
-    "Personalização avançada",
+    "Convite enviado por QRCode",
   ];
-
-  const premiumFeatures: string[] = [
-    "Convites totalmente personalizáveis",
-    "Templates exclusivos",
-    "Animações",
-  ];
-
 
   return (
     <div className="w-full py-[10rem] px-4">
-      <div className="max-w-[1240px] mx-auto grid md:grid-cols-3 gap-8">
-
+      <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-8">
         <ValueCard
-          title="Pacote Básico"
+          title="Pacote Simples"
           price="R$ 1.99"
           features={basicFeatures}
           buttonText="Comprar Agora"
@@ -34,21 +26,12 @@ const ValueCards: React.FC = () => {
         />
 
         <ValueCard
-          title="Pacote Intermediário"
+          title="Pacote Completo"
           price="R$ 9.99"
           features={intermediateFeatures}
           buttonText="Comprar Agora"
           buttonColor="[#f76d02]"
         />
-
-        <ValueCard
-          title="Pacote Premium"
-          price="R$ 19.99"
-          features={premiumFeatures}
-          buttonText="Comprar Agora"
-          buttonColor="[#f76d02]"
-        />
-
       </div>
     </div>
   );
