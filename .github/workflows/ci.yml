@@ -1,8 +1,10 @@
-name: CI - Build
+name: CI - Compile Project
 
 on:
   pull_request:
     branches: [ main ]
+    paths:
+      - 'backend/**'
 
 jobs:
   build:
@@ -14,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -22,3 +24,4 @@ jobs:
 
       - name: Compile project
         run: mvn -B clean compile
+        working-directory: ./backend/personal-date
