@@ -1,4 +1,8 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState } from "react";
+import InviteInputField from "../components/Fields/InviteInputField"
+import InviteSelectField from "../components/Fields/InviteSelectField";
+import InviteTextAreaField from "../components/Fields/InviteTextAreaField";
+import InvitePreview from "../components/Preview/InvitePreview";
 
 interface InviteFormData {
   sender: string;
@@ -14,10 +18,7 @@ const fontOptions = [
   { value: "'Times New Roman', serif", label: "Times New Roman" },
   { value: "'Courier New', monospace", label: "Courier New" },
   { value: "'Georgia', serif", label: "Georgia" },
-  {
-    value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
-    label: "Palatino",
-  },
+  { value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif", label: "Palatino" },
   { value: "'Brush Script MT', cursive", label: "Brush Script" },
 ];
 
@@ -31,9 +32,7 @@ const MakeYourInvite: React.FC = () => {
     fontFamily: "Arial, sans-serif",
   });
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     if (name === "eventDate") {
@@ -47,29 +46,14 @@ const MakeYourInvite: React.FC = () => {
         return;
       }
 
-      // Check if any date component is undefined
-      if (day === undefined || month === undefined || year === undefined) {
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: "XX/XX/XXXX",
-        }));
-        return;
-      }
-
-      const formattedDate = `${day}/${month}/${year}`;
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: formattedDate,
-      }));
+      const formattedDate = day && month && year ? `${day}/${month}/${year}` : "XX/XX/XXXX";
+      setFormData(prev => ({ ...prev, [name]: formattedDate }));
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+      setFormData(prev => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
   };
@@ -85,35 +69,23 @@ const MakeYourInvite: React.FC = () => {
       <div className="flex flex-col items-center py-5 px-4 sm:px-6 md:px-8 w-full max-w-screen-lg mx-auto lg:flex-row">
         <div className="w-full lg:w-1/2 max-w-lg">
           <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-              <label className="block text-white font-bold mb-2" htmlFor="sender">
-                Remetente
-              </label>
-              <input
-                className="border rounded w-full py-3 px-3 text-white"
-                id="sender"
-                name="sender"
-                type="text"
-                value={formData.sender}
-                onChange={handleChange}
-                placeholder="Quem quer enviar esse convite?"
-              />
-            </div>
+            <InviteInputField
+              label="Remetente"
+              id="sender"
+              name="sender"
+              value={formData.sender}
+              onChange={handleChange}
+              placeholder="Quem quer enviar esse convite?"
+            />
 
-            <div>
-              <label className="block text-white font-bold mb-2" htmlFor="address">
-                Endereço
-              </label>
-              <input
-                className="border rounded w-full py-3 px-3 text-white"
-                id="address"
-                name="address"
-                type="text"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="Endereço do evento"
-              />
-            </div>
+            <InviteInputField
+              label="Endereço"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Endereço do evento"
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -128,54 +100,35 @@ const MakeYourInvite: React.FC = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div>
-                <label className="block text-white font-bold mb-2" htmlFor="eventTime">
-                  Hora do Evento
-                </label>
-                <input
-                  className="border rounded w-full py-2 px-3 text-white"
-                  id="eventTime"
-                  name="eventTime"
-                  type="time"
-                  value={formData.eventTime}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-white font-bold mb-2" htmlFor="fontFamily">
-                Fonte do Convite
-              </label>
-              <select
-                className="border rounded w-full py-2 px-3 text-white"
-                id="fontFamily"
-                name="fontFamily"
-                value={formData.fontFamily}
+              <InviteInputField
+                label="Hora do Evento"
+                id="eventTime"
+                name="eventTime"
+                type="time"
+                value={formData.eventTime}
                 onChange={handleChange}
-              >
-                {fontOptions.map((font) => (
-                  <option value={font.value} key={font.value} className="text-black">
-                    {font.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-white font-bold mb-2" htmlFor="message">
-                Mensagem
-              </label>
-              <textarea
-                className="border rounded w-full py-2 px-3 text-white"
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Escreva sua mensagem..."
-                rows={6}
+                className="py-2"
               />
             </div>
+
+            <InviteSelectField
+              label="Fonte do Convite"
+              id="fontFamily"
+              name="fontFamily"
+              value={formData.fontFamily}
+              onChange={handleChange}
+              options={fontOptions}
+            />
+
+            <InviteTextAreaField
+              label="Mensagem"
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Escreva sua mensagem..."
+              rows={6}
+            />
 
             <div className="mb-10">
               <button
@@ -188,26 +141,7 @@ const MakeYourInvite: React.FC = () => {
           </form>
         </div>
 
-        <div
-          className="w-full lg:w-1/2 bg-white p-6 rounded-3xl shadow-lg lg:ml-15 flex flex-col items-center space-y-4 mb-8 lg:mb-0 "
-          style={{ fontFamily: formData.fontFamily }}
-        >
-          <h2 className="text-2xl font-bold">Convite</h2>
-          <div className="flex flex-col items-center space-y-4 w-full">
-            <p>Nome: {formData.sender || "XXXXXXXXXX"}</p>
-            <div className="flex flex-row items-center space-x-4">
-              <p>Data: {formData.eventDate || "DD/MM/AAAA"}</p>
-              <p>Horário: {formData.eventTime || "XX:XX"}</p>
-            </div>
-            <p>Endereço: {formData.address || "XXXXXXXXXX"}</p>
-            <p className="font-semibold">Mensagem:</p>
-            <div className="w-full">
-              <p className="mt-2 p-4 bg-gray-50 rounded break-words whitespace-pre-line min-h-[400px] overflow-auto w-full">
-                {formData.message || "Nenhuma mensagem informada"}
-              </p>
-            </div>
-          </div>
-        </div>
+        <InvitePreview formData={formData} />
       </div>
     </>
   );
