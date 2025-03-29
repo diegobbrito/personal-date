@@ -3,23 +3,27 @@ package com.team3.personal_date.core.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="meet")
+@Table(name="MeetEntity")
 public class Meet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String date;
+    private String time;
+    private String recipientName;
+    private String invitationText;
+    private String adrress;
 
-    private String data;
-    private String hora;
-    private String nomeDestinatario;
-    private String textoConvite;
+    @ManyToOne
+    private Invite invite;
 
-    public Meet(String data, String hora, String nomeDestinatario, String textoConvite) {
-        this.data = data;
-        this.hora = hora;
-        this.nomeDestinatario = nomeDestinatario;
-        this.textoConvite = textoConvite;
+    public Meet(String date, String time, String recipientName, String invitationText, String adrress) {
+        this.date = date;
+        this.time = time;
+        this.recipientName = recipientName;
+        this.invitationText = invitationText;
+        this.adrress = adrress;
     }
 
     public Meet() {}
@@ -32,35 +36,43 @@ public class Meet {
         this.id = id;
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getHora() {
-        return hora;
+    public String getTime() {
+        return time;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getNomeDestinatario() {
-        return nomeDestinatario;
+    public String getRecipientName() {
+        return recipientName;
     }
 
-    public void setNomeDestinatario(String nomeDestinatario) {
-        this.nomeDestinatario = nomeDestinatario;
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
     }
 
-    public String getTextoConvite() {
-        return textoConvite;
+    public String getInvitationText() {
+        return invitationText;
     }
 
-    public void setTextoConvite(String textoConvite) {
-        this.textoConvite = textoConvite;
+    public void setInvitationText(String invitationText) {
+        this.invitationText = invitationText;
+    }
+
+    public String getAdrress() {
+        return adrress;
+    }
+
+    public void setAdrress(String adrress) {
+        this.adrress = adrress;
     }
 }

@@ -1,4 +1,7 @@
 package com.team3.personal_date.api.dto;
 
-public record CreateMeetRequest() {
-}
+import java.util.List;
+
+public record CreateMeetRequest(
+    List<MeetRequest> meetings
+) {}
