@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="Checker">
+
+    <!-- Excluir arquivos de teste -->
+    <module name="SuppressionFilter">
+        <property name="file" value="config/checkstyle/suppressions.xml"/>
+    </module>
+
+    <!-- Evita o uso de tabs -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <!-- Análise da estrutura do código -->
+    <module name="TreeWalker">
+
+        <!-- Regras para Javadoc -->
+        <module name="JavadocType">
+            <property name="scope" value="public"/>
+        </module>
+
+        <module name="JavadocType">
+            <property name="scope" value="protected"/>
+        </module>
+
+        <module name="JavadocType">
+            <property name="scope" value="package"/>
+        </module>
+
+        <module name="JavadocMethod"/>
+
+        <!-- Regras de nomenclatura -->
+        <module name="MethodName"/>
+        <module name="ParameterName"/>
+
+        <!-- Regras de estilo -->
+        <module name="Indentation"/>
+        <module name="WhitespaceAfter"/>
+        <module name="AvoidStarImport"/>
+        <module name="RightCurly"/>
+    </module>
+
+    <!-- Regras gerais de arquivos -->
+    <module name="NewlineAtEndOfFile"/>
+    <module name="UniqueProperties"/>
+
+</module>
