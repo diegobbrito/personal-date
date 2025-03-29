@@ -1,5 +1,6 @@
 package com.team3.personal_date.gateway.repository.meet;
 
+import com.team3.personal_date.gateway.repository.invite.InviteEntity;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,9 @@ public class MeetEntity {
     private String recipientName;
     private String invitationText;
     private String address;
+
+    @ManyToOne
+    private InviteEntity invite;
 
     public MeetEntity(String date, String time, String recipientName, String invitationText, String address) {
         this.date = date;
