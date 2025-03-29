@@ -1,8 +1,26 @@
 package com.team3.personal_date.gateway.repository.meet;
 
-import com.team3.personal_date.core.entity.Meet;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import jakarta.persistence.*;
 
-@Repository
-public interface MeetEntity extends JpaRepository<Meet, Long> {}
+@Entity
+@Table(name="meet")
+
+public class MeetEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String date;
+    private String time;
+    private String recipientName;
+    private String invitationText;
+    private String address;
+
+    public MeetEntity(String date, String time, String recipientName, String invitationText, String address) {
+        this.date = date;
+        this.time = time;
+        this.recipientName = recipientName;
+        this.invitationText = invitationText;
+        this.address = address;
+    }
+}

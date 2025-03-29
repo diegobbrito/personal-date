@@ -1,18 +1,17 @@
 package com.team3.personal_date.core.entity;
 
-import com.team3.personal_date.gateway.repository.meet.MeetEntity;
-import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="InviteEntity")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Invite {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
 
-    @OneToMany(mappedBy = "meet", cascade = CascadeType.ALL)
-    private List<MeetEntity> meets = new ArrayList<>();
+    public Long id;
+    private List<Meet> meets;
+    private Client client;
 }

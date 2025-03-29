@@ -5,4 +5,5 @@ public record MeetRequest(
         String time,
         String recipientName,
         String invitationText,
-        String address) {}
+        String address) {
+}
