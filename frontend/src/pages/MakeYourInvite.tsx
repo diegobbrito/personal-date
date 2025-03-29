@@ -12,6 +12,9 @@ interface InviteFormData {
   message: string;
   address: string;
   fontFamily: string;
+  border?: string;
+  borderColor?: string;
+  specialBorder?: string;
 }
 
 const fontOptions = [
@@ -19,155 +22,147 @@ const fontOptions = [
   { value: "'Times New Roman', serif", label: "Times New Roman" },
   { value: "'Courier New', monospace", label: "Courier New" },
   { value: "'Georgia', serif", label: "Georgia" },
-  {
-    value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
-    label: "Palatino",
-  },
+  { value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif", label: "Palatino" },
   { value: "'Brush Script MT', cursive", label: "Brush Script" },
 ];
 
 const MakeYourInvite: React.FC = () => {
-  const [selectedPackage, setSelectedPackage] = useState<"simple" | "complete">(
-    "simple"
-  );
-  const [formData, setFormData] = useState<InviteFormData>({
+  const [selectedPackage, setSelectedPackage] = useState<"simple" | "complete">("simple");
+  const [formData, setFormData] = useState<InviteFormData[]>([{
     sender: "",
     eventDate: "",
     eventTime: "",
     message: "",
     address: "",
     fontFamily: "Arial, sans-serif",
-  });
+    border: "no",
+  }]);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    index: number
   ) => {
     const { name, value } = e.target;
-
-    if (name === "eventDate") {
-      const [year, month, day] = value.split("-");
-      const selectedDate = new Date(`${year}-${month}-${day}`);
-      const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0);
-
-      if (selectedDate < currentDate) {
-        alert("Você não pode selecionar uma data anterior ao dia atual.");
-        return;
-      }
-
-      const formattedDate =
-        day && month && year ? `${day}/${month}/${year}` : "XX/XX/XXXX";
-      setFormData((prev) => ({ ...prev, [name]: formattedDate }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => {
+      const updatedFormData = [...prev];
+      updatedFormData[index] = { ...updatedFormData[index], [name]: value };
+      return updatedFormData;
+    });
   };
 
   const handleSelectPackage = (packageType: "simple" | "complete") => {
     setSelectedPackage(packageType);
+    setFormData(
+      packageType === "complete"
+        ? [
+            { ...formData[0] },
+            { sender: "", eventDate: "", eventTime: "", message: "", address: "", fontFamily: "Arial, sans-serif", border: "no" },
+          ]
+        : [formData[0]]
+    );
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+    console.log("Convites enviados:", formData);
   };
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-start py-5 lg:py-20 px-4 sm:px-6 mx-auto w-full">
-        <h1 className="text-5xl md:text-7xl tracking-tighter text-white font-mono text-center">
+    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-purple-900">
+      <div className="flex flex-col items-center justify-start py-5 lg:py-12 px-4 sm:px-6 mx-auto w-full">
+        <h1 className="text-4xl md:text-6xl tracking-tighter text-white font-mono text-center">
           Crie seu Convite!
         </h1>
       </div>
+    
+      <PackageSelector onSelectPackage={handleSelectPackage} selectedPackage={selectedPackage} />
 
-      <PackageSelector
-        onSelectPackage={handleSelectPackage}
-        selectedPackage={selectedPackage}
-      />
+      <div className="flex flex-col lg:flex-row items-start justify-center gap-8 py-8 px-4 sm:px-6 md:px-8 w-full max-w-7xl mx-auto">
 
-      <div className="flex flex-col items-center py-5 px-4 sm:px-6 md:px-8 w-full max-w-screen-lg mx-auto lg:flex-row">
-        <div className="w-full lg:w-1/2 max-w-lg">
+        <div className="w-full lg:w-1/2 max-w-2xl bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <InviteInputField
-              label="Remetente"
-              id="sender"
-              name="sender"
-              value={formData.sender}
-              onChange={handleChange}
-              placeholder="Quem quer enviar esse convite?"
-            />
+            {formData.map((invite, index) => (
+              <div key={index} className="border border-white/20 p-6 mb-6 rounded-lg bg-white/5">
+                <h2 className="text-white text-xl font-bold mb-4">Convite {index + 1}</h2>
+                
+                <InviteInputField
+                  label="Remetente"
+                  id={`sender-${index}`}
+                  name="sender"
+                  value={invite.sender}
+                  onChange={(e) => handleChange(e, index)}
+                  placeholder="Quem está enviando este convite?"
+                />
 
-            <InviteInputField
-              label="Endereço"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Endereço do evento"
-            />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <InviteInputField
+                    label="Data do Evento"
+                    id={`eventDate-${index}`}
+                    name="eventDate"
+                    type="date"
+                    value={invite.eventDate}
+                    onChange={(e) => handleChange(e, index)}
+                  />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label
-                  className="block text-white font-bold mb-2"
-                  htmlFor="eventDate"
-                >
-                  Data do Evento
-                </label>
-                <input
-                  className="border rounded w-full py-2 px-3 text-white"
-                  id="eventDate"
-                  name="eventDate"
-                  type="date"
-                  onChange={handleChange}
+                  <InviteInputField
+                    label="Horário"
+                    id={`eventTime-${index}`}
+                    name="eventTime"
+                    type="time"
+                    value={invite.eventTime}
+                    onChange={(e) => handleChange(e, index)}
+                  />
+                </div>
+
+                <InviteInputField
+                  label="Endereço"
+                  id={`address-${index}`}
+                  name="address"
+                  value={invite.address}
+                  onChange={(e) => handleChange(e, index)}
+                  placeholder="Onde será o evento?"
+                />
+
+                <InviteSelectField
+                  label="Estilo da Fonte"
+                  id={`fontFamily-${index}`}
+                  name="fontFamily"
+                  value={invite.fontFamily}
+                  onChange={(e) => handleChange(e, index)}
+                  options={fontOptions}
+                />
+
+                <InviteTextAreaField
+                  label="Mensagem Personalizada"
+                  id={`message-${index}`}
+                  name="message"
+                  value={invite.message}
+                  onChange={(e) => handleChange(e, index)}
+                  placeholder="Escreva sua mensagem especial..."
+                  rows={8}
                 />
               </div>
-              <InviteInputField
-                label="Hora do Evento"
-                id="eventTime"
-                name="eventTime"
-                type="time"
-                value={formData.eventTime}
-                onChange={handleChange}
-                className="py-2"
-              />
-            </div>
+            ))}
 
-            <InviteSelectField
-              label="Fonte do Convite"
-              id="fontFamily"
-              name="fontFamily"
-              value={formData.fontFamily}
-              onChange={handleChange}
-              options={fontOptions}
-            />
-
-            <InviteTextAreaField
-              label="Mensagem"
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Escreva sua mensagem..."
-              rows={6}
-            />
-
-            <div className="mb-10">
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Criar Convite
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg"
+            >
+              Gerar Convite
+            </button>
           </form>
         </div>
 
-        <InvitePreview formData={formData} />
+        <div className="w-full lg:w-1/2 flex flex-col items-center space-y-8 sticky top-8">
+          {formData.map((invite, index) => (
+            <div key={index} className="w-full max-w-2xl">
+              <h3 className="text-white text-xl font-bold mb-4 text-center">Prévia do Convite {index + 1}</h3>
+              <InvitePreview formData={invite} />
+            </div>
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

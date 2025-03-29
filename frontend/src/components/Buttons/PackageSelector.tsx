@@ -18,7 +18,7 @@ const PackageSelector: React.FC<PackageSelectorProps> = ({ onSelectPackage, sele
               selectedPackage === type ? 'bg-blue-600 text-white' : 'bg-gray-200'
             }`}
           >
-            {type === 'simple' ? 'Pacote Simples' : 'Pacote Completo'}
+            {type === 'simple' ? 'Pacote Simples' : 'Pacote Especial'}
           </button>
         ))}
       </div>
