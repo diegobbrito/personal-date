@@ -3,15 +3,15 @@ import ValueCard from "./ValueCard/Card";
 
 const ValueCards: React.FC = () => {
   const basicFeatures: string[] = [
-    "Convites estáticos",
+    "Única opção de convite",
     "Templates limitados",
-    "Personalização simples",
+    "Convite enviado por QRCode"
   ];
 
   const intermediateFeatures: string[] = [
-    "Convites dinâmicos",
+    "Mais opções de convite",
     "Mais templates",
-    "Personalização avançada",
+    "Convite enviado por QRCode"
   ];
 
 
