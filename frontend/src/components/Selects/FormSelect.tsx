@@ -15,7 +15,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   name,
   value,
   onChange,
-  options
+  options,
 }) => {
   return (
     <div>
@@ -30,7 +30,11 @@ const FormSelect: React.FC<FormSelectProps> = ({
         onChange={onChange}
       >
         {options.map((option) => (
-          <option value={option.value} key={option.value} className="text-black">
+          <option
+            value={option.value}
+            key={option.value}
+            className="text-black"
+          >
             {option.label}
           </option>
         ))}

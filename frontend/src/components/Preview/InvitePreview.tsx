@@ -41,7 +41,9 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
                 <p>{formData.eventTime || "XX:XX"}</p>
               </div>
             </div>
-            <p className="my-4 break-words">{formData.address || "XXXXXXXXXX"}</p>
+            <p className="my-4 break-words">
+              {formData.address || "XXXXXXXXXX"}
+            </p>
             <div className={`bg-gray-100 ${messageStyles}`}>
               <p className="italic break-words">
                 {formData.message || "Nenhuma mensagem informada"}
@@ -59,12 +61,17 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </p>
             <p className="mb-8">convida para o evento que ocorrerá em</p>
             <p className="text-xl mb-2">
-              {formData.eventDate || "DD/MM/AAAA"} às {formData.eventTime || "XX:XX"}
+              {formData.eventDate || "DD/MM/AAAA"} às{" "}
+              {formData.eventTime || "XX:XX"}
             </p>
             <p className="mb-8">no endereço:</p>
-            <p className="text-xl mb-8 break-words">{formData.address || "XXXXXXXXXX"}</p>
+            <p className="text-xl mb-8 break-words">
+              {formData.address || "XXXXXXXXXX"}
+            </p>
             <div className={`border-t pt-8 ${messageStyles}`}>
-              <p className="break-words">{formData.message || "Nenhuma mensagem informada"}</p>
+              <p className="break-words">
+                {formData.message || "Nenhuma mensagem informada"}
+              </p>
             </div>
           </div>
         );
@@ -75,17 +82,25 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
               🎉 Você está convidado! 🎉
             </h2>
             <p className="text-xl mb-2">
-              <span className="font-semibold">Quem:</span> {formData.sender || "XXXXXXXXXX"}
+              <span className="font-semibold">Quem:</span>{" "}
+              {formData.sender || "XXXXXXXXXX"}
             </p>
             <p className="text-xl mb-2">
-              <span className="font-semibold">Quando:</span> {formData.eventDate || "DD/MM/AAAA"} às {formData.eventTime || "XX:XX"}
+              <span className="font-semibold">Quando:</span>{" "}
+              {formData.eventDate || "DD/MM/AAAA"} às{" "}
+              {formData.eventTime || "XX:XX"}
             </p>
             <p className="text-xl mb-2">
-              <span className="font-semibold">Onde:</span> {formData.address || "XXXXXXXXXX"}
+              <span className="font-semibold">Onde:</span>{" "}
+              {formData.address || "XXXXXXXXXX"}
             </p>
             <div className={`bg-yellow-100 ${messageStyles}`}>
-              <p className="text-lg font-semibold mb-2">💌 Mensagem especial:</p>
-              <p className="break-words">{formData.message || "Nenhuma mensagem informada"}</p>
+              <p className="text-lg font-semibold mb-2">
+                💌 Mensagem especial:
+              </p>
+              <p className="break-words">
+                {formData.message || "Nenhuma mensagem informada"}
+              </p>
             </div>
           </div>
         );
@@ -94,22 +109,30 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
           <div className="space-y-4 break-words">
             <h2 className="text-4xl font-bold text-center">Convite</h2>
             <p className="text-xl md:text-2xl break-words w-full">
-              <span className="font-semibold">Nome:</span> {formData.sender || "XXXXXXXXXX"}
+              <span className="font-semibold">Nome:</span>{" "}
+              {formData.sender || "XXXXXXXXXX"}
             </p>
             <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-2 md:space-y-0">
               <p className="text-xl md:text-2xl break-words">
-                <span className="font-semibold">Data:</span> {formData.eventDate || "DD/MM/AAAA"}
+                <span className="font-semibold">Data:</span>{" "}
+                {formData.eventDate || "DD/MM/AAAA"}
               </p>
               <p className="text-xl md:text-2xl break-words">
-                <span className="font-semibold">Horário:</span> {formData.eventTime || "XX:XX"}
+                <span className="font-semibold">Horário:</span>{" "}
+                {formData.eventTime || "XX:XX"}
               </p>
             </div>
             <p className="text-xl md:text-2xl break-words w-full">
-              <span className="font-semibold">Endereço:</span> {formData.address || "XXXXXXXXXX"}
+              <span className="font-semibold">Endereço:</span>{" "}
+              {formData.address || "XXXXXXXXXX"}
             </p>
-            <p className="font-semibold text-xl md:text-2xl break-words w-full">Mensagem:</p>
+            <p className="font-semibold text-xl md:text-2xl break-words w-full">
+              Mensagem:
+            </p>
             <div className={`bg-gray-50 ${messageStyles}`}>
-              <p className="break-words">{formData.message || "Nenhuma mensagem informada"}</p>
+              <p className="break-words">
+                {formData.message || "Nenhuma mensagem informada"}
+              </p>
             </div>
           </div>
         );
