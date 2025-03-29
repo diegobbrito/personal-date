@@ -1,10 +1,11 @@
 package com.team3.personal_date.gateway.repository.meet;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="meet")
-
+@NoArgsConstructor
 public class MeetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
