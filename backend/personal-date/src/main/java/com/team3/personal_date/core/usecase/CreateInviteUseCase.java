@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 public class CreateInviteUseCase implements ICreateInviteUseCase {
 
     private final IInviteRepository inviteRepository;
+    private final SendMailUseCase sendMailUseCase;
 
-    public CreateInviteUseCase(IInviteRepository inviteRepository) {
+    public CreateInviteUseCase(IInviteRepository inviteRepository, SendMailUseCase sendMailUseCase) {
         this.inviteRepository = inviteRepository;
+        this.sendMailUseCase = sendMailUseCase;
     }
 
     @Override
@@ -30,5 +32,6 @@ public class CreateInviteUseCase implements ICreateInviteUseCase {
         }
 
         inviteRepository.save(invite);
+        sendMailUseCase.sendInviteEmail(invite);
     }
 }
