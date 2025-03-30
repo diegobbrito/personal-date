@@ -31,7 +31,8 @@ public class CreateInviteUseCase implements ICreateInviteUseCase {
             invite.getMeets().getFirst().setSelected(true);
         }
 
-        inviteRepository.save(invite);
-        sendMailUseCase.sendInviteEmail(invite);
+        var inviteEntity = inviteRepository.save(invite);
+
+        sendMailUseCase.sendInviteEmail(InviteAdapter.toInvite(inviteEntity));
     }
 }

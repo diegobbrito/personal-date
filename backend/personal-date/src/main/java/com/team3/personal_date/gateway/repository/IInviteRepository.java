@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IInviteRepository {
-    void save(Invite invite);
+    InviteEntity save(Invite invite);
 
     Optional<InviteEntity> findById(UUID id);
 

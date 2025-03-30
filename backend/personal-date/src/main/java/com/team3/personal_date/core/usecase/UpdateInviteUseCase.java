@@ -51,7 +51,9 @@ public class UpdateInviteUseCase implements IUpdateInviteUseCase {
 
         inviteRepository.update(invite);
 
-        return InviteAdapter.toInviteResponse(invite.getId(), invite.getMeets().stream()
+        return InviteAdapter.toInviteResponse(invite.getId(),
+                invite.getClient().getName(),
+                invite.getMeets().stream()
                 .filter(Meet::isSelected)
                 .findFirst()
                 .orElseThrow(() -> new MeetNotFoundException("Meet not found")));

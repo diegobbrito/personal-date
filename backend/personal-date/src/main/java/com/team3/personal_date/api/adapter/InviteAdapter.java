@@ -29,13 +29,15 @@ public class InviteAdapter {
     public static InviteResponse toInviteResponse(Invite invite) {
         return new InviteResponse(
                 invite.getId(),
+                invite.getClient().getName(),
                 invite.getMeets().stream().map(MeetAdapter::toMeetResponse).toList()
         );
     }
 
-    public static InviteResponse toInviteResponse(UUID id, Meet meet) {
+    public static InviteResponse toInviteResponse(UUID id, String clientName, Meet meet) {
         return new InviteResponse(
                 id,
+                clientName,
                 List.of(MeetAdapter.toMeetResponse(meet))
         );
     }
