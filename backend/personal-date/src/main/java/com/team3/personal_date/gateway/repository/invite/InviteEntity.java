@@ -1,5 +1,6 @@
 package com.team3.personal_date.gateway.repository.invite;
 
+import com.team3.personal_date.gateway.repository.client.ClientEntity;
 import com.team3.personal_date.gateway.repository.meet.MeetEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,12 @@ public class InviteEntity {
     @JoinColumn(name = "invite_id")
     private List<MeetEntity> meets;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private ClientEntity client;
+
     public InviteEntity(List<MeetEntity> meets) {
         this.meets = meets;
     }
+
 }

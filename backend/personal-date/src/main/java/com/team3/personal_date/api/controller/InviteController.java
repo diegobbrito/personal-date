@@ -40,7 +40,6 @@ public class InviteController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<InviteResponse> selectMeet(@PathVariable UUID id, @RequestBody UpdateInviteRequest meetRequestDTO) {
-
         return ResponseEntity.ok(updateInviteUseCase.updateInvite(id, meetRequestDTO.meetId()));
     }
 }

@@ -14,6 +14,7 @@ public class InviteAdapter {
     public static Invite toInvite(CreateInviteRequest request) {
         Invite invite = new Invite();
         invite.setMeets(request.meetings().stream().map(MeetAdapter::toMeet).toList());
+        invite.setClient(ClientAdapter.toClient(request.client()));
         return invite;
     }
 
@@ -21,6 +22,7 @@ public class InviteAdapter {
         Invite invite = new Invite();
         invite.setId(entity.getId());
         invite.setMeets(MeetAdapter.toMeet(entity.getMeets()));
+        invite.setClient(ClientAdapter.toClient(entity.getClient()));
         return invite;
     }
 
