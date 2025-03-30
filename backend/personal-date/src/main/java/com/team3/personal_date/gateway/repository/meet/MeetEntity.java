@@ -2,6 +2,7 @@ package com.team3.personal_date.gateway.repository.meet;
 
 import com.team3.personal_date.gateway.repository.invite.InviteEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,9 @@ import java.util.UUID;
 @Table(name="meets")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class MeetEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -26,11 +29,13 @@ public class MeetEntity {
     @ManyToOne
     private InviteEntity invite;
 
-    public MeetEntity(String date, String time, String recipientName, String invitationText, String address) {
+    public MeetEntity(UUID id, String date, String time, String recipientName, String invitationText, String address, boolean selected) {
+        this.id = id;
         this.date = date;
         this.time = time;
         this.recipientName = recipientName;
         this.invitationText = invitationText;
         this.address = address;
+        this.isSelected = selected;
     }
 }

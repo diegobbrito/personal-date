@@ -10,4 +10,6 @@ public interface IInviteRepository {
     void save(Invite invite);
 
     Optional<InviteEntity> findById(UUID id);
+
+    void update(Invite invite);
 }

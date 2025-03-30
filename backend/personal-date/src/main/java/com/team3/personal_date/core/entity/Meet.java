@@ -28,7 +28,6 @@ public class Meet {
         this.recipientName = recipientName;
         this.invitationText = invitationText;
         this.address = address;
-        this.isSelected = false;
     }
 
 }

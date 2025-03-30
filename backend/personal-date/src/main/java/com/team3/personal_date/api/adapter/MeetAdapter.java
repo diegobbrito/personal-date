@@ -38,7 +38,15 @@ public class MeetAdapter {
     }
 
     public static MeetEntity toMeetEntity(Meet meet) {
-        return new MeetEntity(meet.getDate(), meet.getTime(), meet.getRecipientName(), meet.getInvitationText(), meet.getAddress());
+        return new MeetEntity(
+                meet.getId(),
+                meet.getDate(),
+                meet.getTime(),
+                meet.getRecipientName(),
+                meet.getInvitationText(),
+                meet.getAddress(),
+                meet.isSelected()
+        );
     }
 
     public static MeetResponse toMeetResponse(Meet meet) {

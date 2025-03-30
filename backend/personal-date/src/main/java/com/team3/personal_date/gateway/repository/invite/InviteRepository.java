@@ -18,14 +18,26 @@ public class InviteRepository implements IInviteRepository {
     }
 
     @Override
+    public Optional<InviteEntity> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Override
     public void save(Invite invite) {
         var meets = MeetAdapter.toMeetEntity(invite.getMeets());
-        var inviteEntity = new InviteEntity(meets);
+        var inviteEntity = new InviteEntity(invite.getId(), meets);
         repository.save(inviteEntity);
     }
 
     @Override
-    public Optional<InviteEntity> findById(UUID id) {
-        return repository.findById(id);
+    public void update(Invite invite) {
+        var meets = MeetAdapter.toMeetEntity(invite.getMeets());
+
+        var inviteEntity = new InviteEntity();
+        inviteEntity.setId(invite.getId());
+        meets.forEach(meet -> meet.setInvite(inviteEntity));
+        inviteEntity.setMeets(meets);
+        repository.save(inviteEntity);
     }
+
 }
