@@ -31,7 +31,7 @@ public class GetInviteUseCase implements IGetInviteUseCase {
         Invite invite = InviteAdapter.toInvite(inviteEntity.get());
         var meet = invite.getMeets().stream().filter(Meet::isSelected).findFirst();
         if(meet.isPresent()){
-            return InviteAdapter.toInviteResponse(invite.getId(), meet.get());
+            return InviteAdapter.toInviteResponse(invite.getId(), invite.getClient().getName(), meet.get());
         }
 
         return InviteAdapter.toInviteResponse(invite);
