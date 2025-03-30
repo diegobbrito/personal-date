@@ -37,30 +37,24 @@ jobs:
 
       - name: Install OpenShift CLI
         run: |
-          curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz | tar xz
+          curl -sL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz | tar xz
           sudo mv oc kubectl /usr/local/bin/
           oc version
 
-      - name: Login to OpenShift
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+      - name: Login to OpenShift Cluster
         run: |
-          oc login --token=${{ secrets.OCP_TOKEN }} --server=${{ secrets.OCP_SERVER }}
+          oc login --token=${{ secrets.OCP_TOKEN }} \
+                   --server=${{ secrets.OCP_SERVER }} \
+                   --insecure-skip-tls-verify=true
 
-      - name: Update Kubernetes Deployment with New Image
+      - name: Navigate to Deployment Directory
         working-directory: ./backend/personal-date/k8s
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}"
-          echo "Updating deployment.yaml with image: $IMAGE_NAME"
+          sed -i 's|image: .*|image: '"$IMAGE_NAME"'|' deployment.yaml
           
-          sed -i "s|image:.*|image: $IMAGE_NAME|g" deployment.yaml
-          
-          echo "Updated deployment.yaml:"
-          cat deployment.yaml
-
-      - name: Deploy to OpenShift
-        working-directory: ./backend/personal-date/k8s
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        run: |
+          # Apply deployment
           oc apply -f deployment.yaml
+          
+          # Verify deployment
+          oc rollout status deployment/meet
