@@ -4,6 +4,7 @@ import InviteSelectField from "../components/Fields/InviteSelectField";
 import InviteTextAreaField from "../components/Fields/InviteTextAreaField";
 import InvitePreview from "../components/Preview/InvitePreview";
 import PackageSelector from "../components/Buttons/PackageSelector";
+import { useNavigate } from "react-router-dom";
 
 type TemplateType = "classic" | "modern" | "elegant" | "fun";
 
@@ -86,11 +87,12 @@ const MakeYourInvite: React.FC = () => {
     );
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Convites enviados:", formData);
+    navigate("/checkout", { state: { formData } });
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-purple-900">
       <div className="flex flex-col items-center py-5 lg:py-12 px-4 sm:px-6 mx-auto w-full">
@@ -179,7 +181,8 @@ const MakeYourInvite: React.FC = () => {
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg"
-            >
+              onClick={handleSubmit}
+              >
               Gerar Convite
             </button>
           </form>
