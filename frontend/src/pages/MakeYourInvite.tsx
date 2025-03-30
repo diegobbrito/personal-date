@@ -4,12 +4,14 @@ import InviteSelectField from "../components/Fields/InviteSelectField";
 import InviteTextAreaField from "../components/Fields/InviteTextAreaField";
 import InvitePreview from "../components/Preview/InvitePreview";
 import PackageSelector from "../components/Buttons/PackageSelector";
+import { useNavigate } from "react-router-dom";
 
 type TemplateType = "classic" | "modern" | "elegant" | "fun";
 
 interface InviteFormData {
   sender: string;
   eventDate: string;
+  receiverName: string;
   eventTime: string;
   message: string;
   address: string;
@@ -44,6 +46,7 @@ const MakeYourInvite: React.FC = () => {
     {
       sender: "",
       eventDate: "",
+      receiverName: "",
       eventTime: "",
       message: "",
       address: "",
@@ -74,6 +77,7 @@ const MakeYourInvite: React.FC = () => {
             { ...formData[0] },
             {
               sender: "",
+              receiverName: "",
               eventDate: "",
               eventTime: "",
               message: "",
@@ -86,9 +90,33 @@ const MakeYourInvite: React.FC = () => {
     );
   };
 
+  const validateDate = (dateString: string): boolean => {
+    if (!dateString) return true;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    
+    const selectedDate = new Date(dateString);
+    
+    return selectedDate >= today;
+  };
+
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Convites enviados:", formData);
+    
+
+    const hasInvalidDate = formData.some(invite => {
+      return !validateDate(invite.eventDate);
+    });
+
+    if (hasInvalidDate) {
+      alert("A data do evento não pode ser anterior ao dia atual!");
+      return;
+    }
+
+    navigate("/checkout", { state: { formData } });
   };
 
   return (
@@ -123,6 +151,14 @@ const MakeYourInvite: React.FC = () => {
                   placeholder="Quem está enviando este convite?"
                   id={""}
                 />
+                <InviteInputField
+                  label="Nome do Convidado"
+                  name="receiverName"
+                  value={invite.receiverName}
+                  onChange={(e) => handleChange(e, index)}
+                  placeholder="Para quem é este convite?"
+                  id={`receiverName-${index}`}
+                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InviteInputField
                     label="Data do Evento"
@@ -141,6 +177,7 @@ const MakeYourInvite: React.FC = () => {
                     id={""}
                   />
                 </div>
+                
                 <InviteInputField
                   label="Endereço"
                   name="address"
@@ -179,6 +216,7 @@ const MakeYourInvite: React.FC = () => {
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg"
+              onClick={handleSubmit}
             >
               Gerar Convite
             </button>
