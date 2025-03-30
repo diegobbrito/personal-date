@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import InvitePreview from "../components/Preview/InvitePreview";
 import { ImSpinner7 } from "react-icons/im";
+import CountdownTimer from "../components/Timer/CountdownTimer";
 
 interface InviteData {
   id: string;
@@ -96,6 +97,12 @@ const DisplayInvite: React.FC = () => {
               }}
             />
           </div>
+        </div>
+        <div className="mt-6">
+          <CountdownTimer
+            targetDate={invite.eventDate}
+            eventTime={invite.eventTime}
+          />
         </div>
       </div>
     </div>
