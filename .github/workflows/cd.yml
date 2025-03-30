@@ -1,10 +1,10 @@
 name: CD - Push Docker Image and Deploy to OpenShift
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
-#    paths:
-#      - 'backend/**'
+    paths:
+      - 'backend/**'
 
 jobs:
   push-docker-image:
@@ -47,14 +47,25 @@ jobs:
                    --server=${{ secrets.OCP_SERVER }} \
                    --insecure-skip-tls-verify=true
 
-      - name: Navigate to Deployment Directory
+      - name: Set image in deployment
         working-directory: ./backend/personal-date/k8s
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}"
+          echo "Updating deployment with image: $IMAGE_NAME"
           sed -i 's|image: .*|image: '"$IMAGE_NAME"'|' deployment.yaml
-          
-          # Apply deployment
-          oc apply -f deployment.yaml
-          
-          # Verify deployment
-          oc rollout status deployment/meet
+
+      - name: Apply Kubernetes deployment
+        working-directory: ./backend/personal-date/k8s
+        run: oc apply -f deployment.yaml
+
+      - name: Verify deployment rollout
+        working-directory: ./backend/personal-date/k8s
+        run: oc rollout status deployment/meet --timeout=120s
+
+      - name: Verify pods status
+        working-directory: ./backend/personal-date/k8s
+        run: |
+          echo "Current pod status:"
+          oc get pods -l app=meet
+          echo "Pod details:"
+          oc describe pods -l app=meet
