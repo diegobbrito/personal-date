@@ -9,7 +9,7 @@ public class ExceptionDetails {
     private final String error;
     private final LocalDateTime timestamp;
 
-    public ExceptionDetails( String details) {
+    public ExceptionDetails(String details) {
         this.error = details;
         this.timestamp = LocalDateTime.now();
     }

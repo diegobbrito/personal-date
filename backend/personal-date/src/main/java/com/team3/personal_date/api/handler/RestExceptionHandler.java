@@ -52,4 +52,10 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(details, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionDetails> handlerMeetExpiredException(MeetExpiredException ex){
+        final var details = new ExceptionDetails(ex.getMessage());
+        return new ResponseEntity<>(details, HttpStatus.NOT_FOUND);
+    }
+
 }
