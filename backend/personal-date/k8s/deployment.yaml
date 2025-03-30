@@ -47,3 +47,23 @@ spec:
                 secretKeyRef:
                   name: secret-meet
                   key: db_server
+            - name: MAIL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: mail_host
+            - name: MAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: mail_port
+            - name: MAIL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: mail_user
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: mail_password
