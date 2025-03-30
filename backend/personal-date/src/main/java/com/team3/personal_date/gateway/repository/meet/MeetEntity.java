@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="meet")
+@Table(name="meets")
 @NoArgsConstructor
 public class MeetEntity {
     @Id
