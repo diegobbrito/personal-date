@@ -2,10 +2,11 @@ package com.team3.personal_date.core.usecase;
 
 import com.team3.personal_date.core.entity.Invite;
 import com.team3.personal_date.core.exception.MailNotSendException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -23,6 +24,7 @@ public class SendMailUseCase implements ISendMailUseCase{
     public void sendInviteEmail(Invite invite) {
         String inviteLink = inviteHost + invite.getId();
         String subject = invite.getClient().getName() + ", seu convite está pronto!";
+
         String content = String.format(
                 """
                 <!DOCTYPE html>
@@ -75,10 +77,11 @@ public class SendMailUseCase implements ISendMailUseCase{
         );
 
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(invite.getClient().getMail().getValue());
-            message.setSubject(subject);
-            message.setText(content);
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(invite.getClient().getMail().getValue());
+            helper.setSubject(subject);
+            helper.setText(content, true);
             mailSender.send(message);
             log.info("Mail sent to invite id: {}", invite.getId());
         } catch (Exception e) {
