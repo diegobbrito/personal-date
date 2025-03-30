@@ -18,9 +18,25 @@ const Checkout: React.FC = () => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
 
+  const payload = {
+    client: {
+      name: name,
+      mail: email
+    },
+    meetings: formData.map(invite => ({
+      receiverName: invite.sender,
+      eventDate: invite.eventDate,
+      eventTime: invite.eventTime,
+      message: invite.message,
+      fontFamily: invite.fontFamily,
+      address: invite.address,
+      template: invite.template
+    }))
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Dados enviados:", { name, email, invites: formData });
+    console.log("Dados enviados:", payload);
     alert("Convites enviados para processamento!");
   };
 
@@ -42,7 +58,35 @@ const Checkout: React.FC = () => {
           </div>
         </div>
 
-        
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl p-6">
+          <h2 className="text-2xl text-white font-bold mb-4">Informações Pessoais</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/50 focus:ring-2 focus:ring-purple-500"
+              placeholder="Nome Completo"
+              required
+            />
+
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/50 focus:ring-2 focus:ring-purple-500"
+              placeholder="E-mail"
+              required
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg"
+            >
+              Finalizar Compra
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
