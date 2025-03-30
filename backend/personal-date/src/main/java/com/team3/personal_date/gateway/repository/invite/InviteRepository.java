@@ -29,7 +29,7 @@ public class InviteRepository implements IInviteRepository {
     }
 
     @Override
-    public void save(Invite invite) {
+    public InviteEntity save(Invite invite) {
 
         var inviteEntity = new InviteEntity();
         inviteEntity.setMeets(MeetAdapter.toMeetEntity(invite.getMeets()));
@@ -43,7 +43,7 @@ public class InviteRepository implements IInviteRepository {
             inviteEntity.setClient(newClientEntity);
         }
 
-        repository.save(inviteEntity);
+        return repository.save(inviteEntity);
     }
 
     @Override
