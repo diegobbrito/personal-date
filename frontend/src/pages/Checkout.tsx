@@ -4,6 +4,7 @@ import InvitePreview from "../components/Preview/InvitePreview";
 
 interface InviteFormData {
   sender: string;
+  receiverName: string;
   eventDate: string;
   eventTime: string;
   message: string;
@@ -24,7 +25,8 @@ const Checkout: React.FC = () => {
       mail: email
     },
     meetings: formData.map(invite => ({
-      receiverName: invite.sender,
+      sender: invite.sender,
+      receiverName: invite.receiverName,
       eventDate: invite.eventDate,
       eventTime: invite.eventTime,
       message: invite.message,
