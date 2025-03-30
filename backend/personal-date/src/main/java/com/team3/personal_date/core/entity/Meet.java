@@ -14,20 +14,23 @@ import java.util.UUID;
 public class Meet {
 
     private UUID id;
-    private String date;
-    private String time;
-    private String recipientName;
-    private String invitationText;
+    private String receiverName;
+    private String eventDate;
+    private String eventTime;
+    private String message;
+    private String fontFamily;
     private String address;
+    private String template;
     private boolean isSelected;
 
 
-    public Meet(String date, String time, String recipientName, String invitationText, String address) {
-        this.date = date;
-        this.time = time;
-        this.recipientName = recipientName;
-        this.invitationText = invitationText;
+    public Meet(String receiverName, String eventDate, String eventTime, String message, String fontFamily, String address, String template) {
+        this.receiverName = receiverName;
+        this.eventDate = eventDate;
+        this.eventTime = eventTime;
+        this.message = message;
+        this.fontFamily = fontFamily;
         this.address = address;
+        this.template = template;
     }
-
 }

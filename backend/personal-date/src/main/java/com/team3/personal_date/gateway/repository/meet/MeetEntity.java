@@ -19,23 +19,27 @@ public class MeetEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String date;
-    private String time;
-    private String recipientName;
-    private String invitationText;
+    private String receiverName;
+    private String eventDate;
+    private String eventTime;
+    private String message;
+    private String fontFamily;
     private String address;
+    private String template;
     private boolean isSelected;
 
     @ManyToOne
     private InviteEntity invite;
 
-    public MeetEntity(UUID id, String date, String time, String recipientName, String invitationText, String address, boolean selected) {
+    public MeetEntity(UUID id, String receiverName, String eventDate, String eventTime, String message, String fontFamily, String address, String template, boolean isSelected) {
         this.id = id;
-        this.date = date;
-        this.time = time;
-        this.recipientName = recipientName;
-        this.invitationText = invitationText;
+        this.receiverName = receiverName;
+        this.eventDate = eventDate;
+        this.eventTime = eventTime;
+        this.message = message;
+        this.fontFamily = fontFamily;
         this.address = address;
-        this.isSelected = selected;
+        this.template = template;
+        this.isSelected = isSelected;
     }
 }

@@ -9,12 +9,15 @@ import java.util.List;
 
 public class MeetAdapter {
     public static Meet toMeet(MeetRequest meetRequest) {
+
         return new Meet(
-                meetRequest.date(),
-                meetRequest.time(),
-                meetRequest.recipientName(),
-                meetRequest.invitationText(),
-                meetRequest.address()
+                meetRequest.receiverName(),
+                meetRequest.eventDate(),
+                meetRequest.eventTime(),
+                meetRequest.message(),
+                meetRequest.fontFamily(),
+                meetRequest.address(),
+                meetRequest.template()
         );
     }
 
@@ -25,11 +28,13 @@ public class MeetAdapter {
     private static Meet toMeet(MeetEntity meetEntity) {
         return new Meet(
                 meetEntity.getId(),
-                meetEntity.getDate(),
-                meetEntity.getTime(),
-                meetEntity.getRecipientName(),
-                meetEntity.getInvitationText(),
+                meetEntity.getReceiverName(),
+                meetEntity.getEventDate(),
+                meetEntity.getEventTime(),
+                meetEntity.getMessage(),
+                meetEntity.getFontFamily(),
                 meetEntity.getAddress(),
+                meetEntity.getTemplate(),
                 meetEntity.isSelected());
     }
 
@@ -40,11 +45,13 @@ public class MeetAdapter {
     public static MeetEntity toMeetEntity(Meet meet) {
         return new MeetEntity(
                 meet.getId(),
-                meet.getDate(),
-                meet.getTime(),
-                meet.getRecipientName(),
-                meet.getInvitationText(),
+                meet.getReceiverName(),
+                meet.getEventDate(),
+                meet.getEventTime(),
+                meet.getMessage(),
+                meet.getFontFamily(),
                 meet.getAddress(),
+                meet.getTemplate(),
                 meet.isSelected()
         );
     }
@@ -52,11 +59,13 @@ public class MeetAdapter {
     public static MeetResponse toMeetResponse(Meet meet) {
         return new MeetResponse(
                 meet.getId(),
-                meet.getDate(),
-                meet.getTime(),
-                meet.getRecipientName(),
-                meet.getInvitationText(),
-                meet.getAddress()
+                meet.getReceiverName(),
+                meet.getEventDate(),
+                meet.getEventTime(),
+                meet.getMessage(),
+                meet.getFontFamily(),
+                meet.getAddress(),
+                meet.getTemplate()
         );
     }
 }
