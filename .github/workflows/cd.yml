@@ -1,0 +1,61 @@
+name: CD - Push Docker Image and Deploy to OpenShift
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  push-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate with Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend/personal-date
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:latest
+            ${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}
+
+  deploy-ocp:
+    runs-on: ubuntu-latest
+    needs: push-docker-image
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to OpenShift
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          oc login --token=${{ secrets.OCP_TOKEN }} --server=${{ secrets.OCP_SERVER }}
+
+      - name: Update Kubernetes Deployment with New Image
+        working-directory: ./backend/personal-date/k8s/app
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}
+          echo "Updating deployment.yaml with image: $IMAGE_NAME"
+          
+          # Atualiza apenas a linha que contém 'image:'
+          sed -i '/image:/c\        image: '"$IMAGE_NAME" deployment.yaml
+          
+          echo "Updated deployment.yaml:"
+          cat deployment.yaml
+
+      - name: Deploy to OpenShift
+        working-directory: ./backend/personal-date/k8s/app
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          oc apply -f deployment.yaml

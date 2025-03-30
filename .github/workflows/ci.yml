@@ -1,0 +1,169 @@
+name: CI - Build, Test and Verify
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build and Run Tests
+        run: mvn -B verify
+        working-directory: ./backend/personal-date
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        timeout-minutes: 15
+
+      - name: Verify Test Reports Exist
+        run: |
+          echo "Checking test reports..."
+          ls -la backend/personal-date/target/surefire-reports || true
+          ls -la backend/personal-date/target/failsafe-reports || true
+          ls -la backend/personal-date/target/site/jacoco || true
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            ${{ github.workspace }}/backend/personal-date/target/surefire-reports/**/*
+            ${{ github.workspace }}/backend/personal-date/target/failsafe-reports/**/*
+            ${{ github.workspace }}/backend/personal-date/target/site/jacoco/**/*
+          if-no-files-found: warn
+
+  code-quality-checks:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run Quality Checks
+        working-directory: ./backend/personal-date
+        run: |
+          mvn -B checkstyle:check -Dcheckstyle.failOnViolation=false
+          mvn -B pmd:pmd
+          mvn -B com.github.spotbugs:spotbugs-maven-plugin:check
+
+      - name: Generate Reports
+        if: success() || failure()
+        run: mvn -B site
+        working-directory: ./backend/personal-date
+
+      - name: Install XML tools
+        run: sudo apt-get install -y xmlstarlet jq
+
+      - name: Extract Quality Metrics
+        id: quality-metrics
+        working-directory: ./backend/personal-date
+        run: |
+          if [ -f "target/site/jacoco/jacoco.xml" ]; then
+            COVERAGE=$(xmlstarlet sel -t -v '//report/counter[@type="LINE"]/@covered' target/site/jacoco/jacoco.xml 2>/dev/null || echo "0")
+            TOTAL=$(xmlstarlet sel -t -v '//report/counter[@type="LINE"]/@covered + //report/counter[@type="LINE"]/@missed' target/site/jacoco/jacoco.xml 2>/dev/null || echo "1")
+            COVERAGE_PERCENT=$(echo "scale=2; $COVERAGE * 100 / $TOTAL" | bc)
+          else
+            COVERAGE_PERCENT="0"
+          fi
+  
+          if [ -f "target/pmd.xml" ]; then
+            PMD_ISSUES=$(xmlstarlet sel -t -v 'count(//violation)' target/pmd.xml 2>/dev/null || echo "0")
+            PMD_CRITICAL=$(xmlstarlet sel -t -v 'count(//violation[@priority="1"])' target/pmd.xml 2>/dev/null || echo "0")
+          else
+            PMD_ISSUES="0"
+            PMD_CRITICAL="0"
+          fi
+  
+          if [ -f "target/checkstyle-result.xml" ]; then
+            CHECKSTYLE_ERRORS=$(xmlstarlet sel -t -v 'count(//error[@severity="error"])' target/checkstyle-result.xml 2>/dev/null || echo "0")
+            CHECKSTYLE_WARNINGS=$(xmlstarlet sel -t -v 'count(//error[@severity="warning"])' target/checkstyle-result.xml 2>/dev/null || echo "0")
+          else
+            CHECKSTYLE_ERRORS="0"
+            CHECKSTYLE_WARNINGS="0"
+          fi
+  
+          if [ -f "target/spotbugsXml.xml" ]; then
+            SPOTBUGS_ISSUES=$(xmlstarlet sel -t -v 'count(//BugInstance)' target/spotbugsXml.xml 2>/dev/null || echo "0")
+          else
+            SPOTBUGS_ISSUES="0"
+          fi
+  
+          echo "coverage=${COVERAGE_PERCENT}%" >> $GITHUB_OUTPUT
+          echo "pmd_issues=${PMD_ISSUES}" >> $GITHUB_OUTPUT
+          echo "pmd_critical=${PMD_CRITICAL}" >> $GITHUB_OUTPUT
+          echo "checkstyle_errors=${CHECKSTYLE_ERRORS}" >> $GITHUB_OUTPUT
+          echo "checkstyle_warnings=${CHECKSTYLE_WARNINGS}" >> $GITHUB_OUTPUT
+          echo "spotbugs_issues=${SPOTBUGS_ISSUES}" >> $GITHUB_OUTPUT
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-quality-reports
+          path: |
+            ${{ github.workspace }}/backend/personal-date/target/site/**
+          if-no-files-found: warn
+
+      - name: Generate Enhanced Job Summary
+        run: |
+          COVERAGE_VALUE=$(echo "${{ steps.quality-metrics.outputs.coverage }}" | sed 's/%//')
+          
+          PMD_STATUS=$([ "${{ steps.quality-metrics.outputs.pmd_critical }}" -eq 0 ] && echo "✅" || echo "❌")
+          CHECKSTYLE_STATUS=$([ "${{ steps.quality-metrics.outputs.checkstyle_errors }}" -eq 0 ] && echo "✅" || echo "❌")
+          SPOTBUGS_STATUS=$([ "${{ steps.quality-metrics.outputs.spotbugs_issues }}" -eq 0 ] && echo "✅" || echo "❌")
+          COVERAGE_STATUS=$([ "$COVERAGE_VALUE" -ge 80 ] && echo "✅" || echo "⚠️")
+          
+          echo "### 📊 Code Quality Report" >> $GITHUB_STEP_SUMMARY
+          echo "#### 🧪 Test Coverage: ${{ steps.quality-metrics.outputs.coverage }}" >> $GITHUB_STEP_SUMMARY
+          echo "#### 🔍 Static Analysis Results" >> $GITHUB_STEP_SUMMARY
+          echo "| Tool | Issues | Critical | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| PMD | ${{ steps.quality-metrics.outputs.pmd_issues }} | ${{ steps.quality-metrics.outputs.pmd_critical }} | $PMD_STATUS |" >> $GITHUB_STEP_SUMMARY
+          echo "| Checkstyle | ${{ steps.quality-metrics.outputs.checkstyle_errors }} errors, ${{ steps.quality-metrics.outputs.checkstyle_warnings }} warnings | - | $CHECKSTYLE_STATUS |" >> $GITHUB_STEP_SUMMARY
+          echo "| Spotbugs | ${{ steps.quality-metrics.outputs.spotbugs_issues }} | - | $SPOTBUGS_STATUS |" >> $GITHUB_STEP_SUMMARY
+          echo "#### 📈 Coverage Status: $COVERAGE_STATUS (Minimum: 80%)" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "$COVERAGE_VALUE" -eq 0 ]; then
+            echo "❌ **Warning**: No coverage data collected. Please check:" >> $GITHUB_STEP_SUMMARY
+            echo "- Test execution configuration" >> $GITHUB_STEP_SUMMARY
+            echo "- JaCoCo plugin setup in pom.xml" >> $GITHUB_STEP_SUMMARY
+            echo "- [Download test reports](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "### 🔗 Useful Links" >> $GITHUB_STEP_SUMMARY
+          echo "- [Test Results](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Full Build Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
