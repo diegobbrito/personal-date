@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import InvitePreview from "../components/Preview/InvitePreview";
+import axios from "axios";
 
 interface InviteFormData {
   sender: string;
@@ -36,10 +37,32 @@ const Checkout: React.FC = () => {
     }))
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Dados enviados:", payload);
-    alert("Convites enviados para processamento!");
+    
+    
+    try {
+      const response = await axios.post(
+        "https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites",  
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if(response.status === 200){
+
+        alert("Compra finalizada com sucesso!");
+        console.log("Resposta da API:", response.data);
+      }
+    
+      
+    } catch (error) {
+      console.error("Erro ao enviar dados:", error);
+      alert("Ocorreu um erro ao processar sua compra. Por favor, tente novamente.");
+    } 
   };
 
   return (
