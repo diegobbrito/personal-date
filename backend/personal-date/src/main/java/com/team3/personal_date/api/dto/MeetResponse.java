@@ -4,9 +4,11 @@ import java.util.UUID;
 
 public record MeetResponse(
         UUID id,
-        String date,
-        String time,
-        String recipientName,
-        String invitationText,
-        String address) {
+        String receiverName,
+        String eventDate,
+        String eventTime,
+        String message,
+        String fontFamily,
+        String address,
+        String template) {
 }

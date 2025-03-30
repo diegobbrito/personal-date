@@ -1,13 +1,15 @@
 package com.team3.personal_date.core.valueobject;
 
 import com.team3.personal_date.core.exception.InvalidMailException;
+import lombok.Getter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Getter
 public class Mail {
 
-    private String value;
+    private final String value;
 
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -29,7 +31,4 @@ public class Mail {
         return matcher.matches();
     }
 
-    public String getValue() {
-        return value;
-    }
 }
