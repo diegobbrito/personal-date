@@ -67,3 +67,8 @@ spec:
                 secretKeyRef:
                   name: secret-meet
                   key: mail_password
+            - name: APPLICATION_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-meet
+                  key: application_host
