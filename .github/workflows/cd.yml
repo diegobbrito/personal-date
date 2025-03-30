@@ -35,6 +35,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Install OpenShift CLI (oc)
+        run: |
+          curl -LO https://github.com/openshift/okd/releases/download/v4.11.23/openshift-client-linux-4.11.23.tar.gz
+          tar -xvf openshift-client-linux-4.11.23.tar.gz
+          sudo mv oc /usr/local/bin/oc
+
       - name: Login to OpenShift
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
@@ -47,7 +53,6 @@ jobs:
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}
           echo "Updating deployment.yaml with image: $IMAGE_NAME"
           
-          # Atualiza apenas a linha que contém 'image:'
           sed -i '/image:/c\        image: '"$IMAGE_NAME" deployment.yaml
           
           echo "Updated deployment.yaml:"
