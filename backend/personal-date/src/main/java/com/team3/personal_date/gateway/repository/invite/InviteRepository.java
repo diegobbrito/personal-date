@@ -8,6 +8,7 @@ import com.team3.personal_date.gateway.repository.IInviteRepository;
 import com.team3.personal_date.gateway.repository.client.JpaClientRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,4 +62,8 @@ public class InviteRepository implements IInviteRepository {
         repository.save(inviteEntity);
     }
 
+    @Override
+    public List<InviteEntity> findAllByClientId(UUID clientId) {
+        return repository.findAllByClientId(clientId);
+    }
 }
