@@ -1,4 +1,7 @@
 package com.team3.personal_date.api.dto;
 
-public record InviteResponse() {
+import java.util.List;
+import java.util.UUID;
+
+public record InviteResponse(UUID id,List<MeetResponse> meetings) {
 }
