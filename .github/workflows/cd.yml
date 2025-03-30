@@ -50,10 +50,10 @@ jobs:
       - name: Update Kubernetes Deployment with New Image
         working-directory: ./backend/personal-date/k8s/app
         run: |
-          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}"
           echo "Updating deployment.yaml with image: $IMAGE_NAME"
           
-          sed -i '/image:/c\        image: '"$IMAGE_NAME" deployment.yaml
+          sed -i "s|image:.*|image: $IMAGE_NAME|g" deployment.yaml
           
           echo "Updated deployment.yaml:"
           cat deployment.yaml
