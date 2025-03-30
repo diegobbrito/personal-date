@@ -3,8 +3,8 @@ name: CD - Push Docker Image and Deploy to OpenShift
 on:
   pull_request:
     branches: [ main ]
-    paths:
-      - 'backend/**'
+#    paths:
+#      - 'backend/**'
 
 jobs:
   push-docker-image:
