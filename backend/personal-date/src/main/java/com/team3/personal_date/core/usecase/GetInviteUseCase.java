@@ -9,6 +9,7 @@ import com.team3.personal_date.gateway.repository.IInviteRepository;
 import com.team3.personal_date.gateway.repository.invite.InviteEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,5 +36,18 @@ public class GetInviteUseCase implements IGetInviteUseCase {
         }
 
         return InviteAdapter.toInviteResponse(invite);
+    }
+
+    @Override
+    public List<InviteResponse> getAllInvitesByClient(UUID clientId) {
+
+        var invites = inviteRepository.findAllByClientId(clientId);
+        if(invites.isEmpty()) {
+            throw new InviteNotFoundException("No invite was found");
+        }
+
+        List<Invite> inviteList = InviteAdapter.toInviteList(invites);
+
+        return inviteList.stream().map(InviteAdapter::toInviteResponse).toList();
     }
 }

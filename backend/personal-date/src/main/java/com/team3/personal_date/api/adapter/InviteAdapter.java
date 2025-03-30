@@ -39,4 +39,8 @@ public class InviteAdapter {
                 List.of(MeetAdapter.toMeetResponse(meet))
         );
     }
+
+    public static List<Invite> toInviteList(List<InviteEntity> invites) {
+        return invites.stream().map(InviteAdapter::toInvite).toList();
+    }
 }
