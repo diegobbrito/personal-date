@@ -5,6 +5,9 @@ import com.team3.personal_date.core.entity.Invite;
 import com.team3.personal_date.gateway.repository.IInviteRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Component
 public class InviteRepository implements IInviteRepository {
 
@@ -19,5 +22,10 @@ public class InviteRepository implements IInviteRepository {
         var meets = MeetAdapter.toMeetEntity(invite.getMeets());
         var inviteEntity = new InviteEntity(meets);
         repository.save(inviteEntity);
+    }
+
+    @Override
+    public Optional<InviteEntity> findById(UUID id) {
+        return repository.findById(id);
     }
 }
