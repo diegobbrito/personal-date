@@ -36,9 +36,14 @@ const DisplayInvite: React.FC = () => {
           `https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites/${id}`
         );
 
-        if (response.data.meetings && response.data.meetings.length > 0) {
+        console.log(response)
+
+        if (response.data.meetings && response.data.meetings.length > 1) {
+          alert("Seu convite ainda não foi selecionado!")
+        } else if(response.data.meetings && response.data.meetings.length === 1){
           setInvite(response.data.meetings[0]);
-        } else {
+        }
+        else {
           setError("Convite não encontrado");
         }
       } catch (err) {
@@ -75,6 +80,8 @@ const DisplayInvite: React.FC = () => {
       </div>
     );
   }
+
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-purple-900 py-12 px-4 sm:px-6">
