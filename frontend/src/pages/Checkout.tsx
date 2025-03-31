@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import InvitePreview from "../components/Preview/InvitePreview";
 import axios from "axios";
@@ -18,8 +18,8 @@ interface InviteFormData {
 const Checkout: React.FC = () => {
   const location = useLocation();
   const formData = (location.state?.formData as InviteFormData[]) || [];
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
 
   if(formData.length === 0){
@@ -48,8 +48,9 @@ const Checkout: React.FC = () => {
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
-      if (response.status === 200) {
-        alert("Compra finalizada com sucesso!");
+      if (response.status === 201) {
+        
+        alert("Convite gerado com sucesso, cheque seu email!");
 
       }
     } catch (error) {
