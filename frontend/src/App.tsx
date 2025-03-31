@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import MakeYourInvite from "./pages/MakeYourInvite";
 import Checkout from "./pages/Checkout";
 import DisplayInvite from "./pages/DisplayInvite";
-import ChoosePage from "./pages/ChoosePage";
 
 
 function App() {
@@ -15,7 +14,6 @@ function App() {
         <Route path="/makeyourinvite" element={<MakeYourInvite/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
         <Route path="/invite/:id" element={<DisplayInvite/>}/>
-        <Route path="/chooseInvite/:id" element={<ChoosePage/>}/>
       </Routes>
     </BrowserRouter>
   );
