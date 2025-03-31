@@ -124,7 +124,7 @@ const ChoosePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-purple-900 py-12 px-4 relative">
-      
+
       <SuccessModal show={showSuccessModal} />
 
       <div className="max-w-6xl mx-auto">
@@ -133,7 +133,7 @@ const ChoosePage: React.FC = () => {
             Escolha Seu Convite
           </h1>
           <p className="text-xl text-blue-200 max-w-2xl mx-auto">
-            Selecione abaixo o convite que melhor representa o seu evento
+            Selecione o melhor convite
           
           </p>
         </div>
@@ -158,7 +158,7 @@ const ChoosePage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white px-6 pb-6 pt-3">
+        
               <div className="bg-white px-6 pb-6 pt-3">
                 <SelectButton
                   isSelected={selectedMeetId === invite.id}
@@ -166,7 +166,7 @@ const ChoosePage: React.FC = () => {
                   disabled={selectedMeetId === invite.id || loading}
                 />
               </div>
-              </div>
+              
             </div>
           ))}
         </div>
