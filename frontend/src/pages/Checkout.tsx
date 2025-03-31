@@ -5,6 +5,7 @@ import axios from "axios";
 
 interface InviteFormData {
   sender: string;
+  clientName: string;
   receiverName: string;
   eventDate: string;
   eventTime: string;
