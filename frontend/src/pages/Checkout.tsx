@@ -21,9 +21,8 @@ const Checkout: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-
-  if(formData.length === 0){
-    return <Navigate to="/" replace/>
+  if (formData.length === 0) {
+    return <Navigate to="/" replace />;
   }
 
   const payload = {
@@ -49,13 +48,13 @@ const Checkout: React.FC = () => {
         { headers: { "Content-Type": "application/json" } }
       );
       if (response.status === 201) {
-        
         alert("Convite gerado com sucesso, cheque seu email!");
-
       }
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
-      alert("Ocorreu um erro ao processar sua compra. Por favor, tente novamente.");
+      alert(
+        "Ocorreu um erro ao processar sua compra. Por favor, tente novamente."
+      );
     }
   };
 
@@ -79,13 +78,17 @@ const Checkout: React.FC = () => {
                 </div>
               ))
             ) : (
-              <p className="text-white text-center w-full">Nenhum convite encontrado.</p>
+              <p className="text-white text-center w-full">
+                Nenhum convite encontrado.
+              </p>
             )}
           </div>
         </div>
 
         <div className="bg-white/10 rounded-xl shadow-xl p-6">
-          <h2 className="text-2xl text-white font-bold mb-4">Informações Pessoais</h2>
+          <h2 className="text-2xl text-white font-bold mb-4">
+            Informações Pessoais
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
