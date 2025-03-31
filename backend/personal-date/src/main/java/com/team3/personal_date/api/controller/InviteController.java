@@ -21,7 +21,7 @@ public class InviteController {
     private final IGetInviteUseCase getInviteUseCase;
     private final IUpdateInviteUseCase updateInviteUseCase;
 
-    public InviteController(CreateInviteUseCase createMeetUseCase, IGetInviteUseCase getInviteUseCase, IUpdateInviteUseCase updateInviteUseCase) {
+    public InviteController(ICreateInviteUseCase createMeetUseCase, IGetInviteUseCase getInviteUseCase, IUpdateInviteUseCase updateInviteUseCase) {
         this.createInviteUseCase = createMeetUseCase;
         this.getInviteUseCase = getInviteUseCase;
         this.updateInviteUseCase = updateInviteUseCase;
