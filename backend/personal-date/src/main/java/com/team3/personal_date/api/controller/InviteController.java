@@ -3,7 +3,6 @@ package com.team3.personal_date.api.controller;
 import com.team3.personal_date.api.dto.CreateInviteRequest;
 import com.team3.personal_date.api.dto.InviteResponse;
 import com.team3.personal_date.api.dto.UpdateInviteRequest;
-import com.team3.personal_date.core.usecase.CreateInviteUseCase;
 import com.team3.personal_date.core.usecase.ICreateInviteUseCase;
 import com.team3.personal_date.core.usecase.IGetInviteUseCase;
 import com.team3.personal_date.core.usecase.IUpdateInviteUseCase;

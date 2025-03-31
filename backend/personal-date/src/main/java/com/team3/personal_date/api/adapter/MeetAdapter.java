@@ -11,6 +11,7 @@ public class MeetAdapter {
     public static Meet toMeet(MeetRequest meetRequest) {
 
         return new Meet(
+                meetRequest.senderName(),
                 meetRequest.receiverName(),
                 meetRequest.eventDate(),
                 meetRequest.eventTime(),
@@ -28,6 +29,7 @@ public class MeetAdapter {
     private static Meet toMeet(MeetEntity meetEntity) {
         return new Meet(
                 meetEntity.getId(),
+                meetEntity.getSenderName(),
                 meetEntity.getReceiverName(),
                 meetEntity.getEventDate(),
                 meetEntity.getEventTime(),
@@ -45,6 +47,7 @@ public class MeetAdapter {
     public static MeetEntity toMeetEntity(Meet meet) {
         return new MeetEntity(
                 meet.getId(),
+                meet.getSenderName(),
                 meet.getReceiverName(),
                 meet.getEventDate(),
                 meet.getEventTime(),
@@ -59,6 +62,7 @@ public class MeetAdapter {
     public static MeetResponse toMeetResponse(Meet meet) {
         return new MeetResponse(
                 meet.getId(),
+                meet.getSenderName(),
                 meet.getReceiverName(),
                 meet.getEventDate(),
                 meet.getEventTime(),

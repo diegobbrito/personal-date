@@ -42,7 +42,7 @@ class GetInviteUseCaseTest {
         inviteEntity = new InviteEntity();
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
-        Meet meet = new Meet(UUID.randomUUID(), "Receiver Name", today.toString(), now.toString(), "Message", "Arial", "123 Street", "Template", true);
+        Meet meet = new Meet(UUID.randomUUID(),"Sender Name", "Receiver Name", today.toString(), now.toString(), "Message", "Arial", "123 Street", "Template", true);
         ClientEntity clientEntity = new ClientEntity(UUID.randomUUID(), "John Doe", "test@john.com");
         inviteEntity.setId(inviteId);
         inviteEntity.setClient(clientEntity);
@@ -71,7 +71,7 @@ class GetInviteUseCaseTest {
 
     @Test
     void testGetInvite_ExpiredMeet() {
-        Meet expiredMeet = new Meet(UUID.randomUUID(), "Receiver Name", LocalDate.now().minusDays(1).toString(), LocalTime.now().toString(), "Message", "Arial", "123 Street", "Template", true);
+        Meet expiredMeet = new Meet(UUID.randomUUID(),"Sender Name", "Receiver Name", LocalDate.now().minusDays(1).toString(), LocalTime.now().toString(), "Message", "Arial", "123 Street", "Template", true);
         inviteEntity.setMeets(MeetAdapter.toMeetEntity(List.of(expiredMeet)));
         when(inviteRepository.findById(inviteId)).thenReturn(Optional.of(inviteEntity));
 

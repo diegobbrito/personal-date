@@ -34,7 +34,7 @@ class InviteControllerTest {
     @Test
     void testGetInvite() {
         var id = UUID.randomUUID();
-        var meetResponse = new MeetResponse(UUID.randomUUID(), "Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template");
+        var meetResponse = new MeetResponse(UUID.randomUUID(), "Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template");
         var inviteResponse = new InviteResponse(id, "John Doe", List.of(meetResponse));
 
         when(getInviteUseCase.getInvite(id)).thenReturn(inviteResponse);
@@ -65,7 +65,7 @@ class InviteControllerTest {
     void testCreateInvite() {
         var createInviteRequest = new CreateInviteRequest(
                 new ClientRequest("John Doe", "john.doe@example.com"),
-                List.of(new MeetRequest("Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template"))
+                List.of(new MeetRequest("Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template"))
         );
 
         ResponseEntity<Void> response = inviteController.createInvite(createInviteRequest);
@@ -80,7 +80,7 @@ class InviteControllerTest {
         var id = UUID.randomUUID();
         var meetId = UUID.randomUUID();
         var updateInviteRequest = new UpdateInviteRequest(meetId);
-        var meetResponse = new MeetResponse(meetId, "Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template");
+        var meetResponse = new MeetResponse(meetId, "Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template");
         var inviteResponse = new InviteResponse(id, "John Doe", List.of(meetResponse));
 
         when(updateInviteUseCase.updateInvite(id, meetId)).thenReturn(inviteResponse);

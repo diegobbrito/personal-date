@@ -32,7 +32,7 @@ class ClientControllerTest {
     @Test
     void testGetAllInvites() {
         var id = UUID.randomUUID();
-        var meetResponse = new MeetResponse(UUID.randomUUID(), "Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template");
+        var meetResponse = new MeetResponse(UUID.randomUUID(), "Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template");
         var inviteResponse = new InviteResponse(id, "John Doe", List.of(meetResponse));
 
         when(getInviteUseCase.getAllInvitesByClient(Mockito.any())).thenReturn(List.of(inviteResponse));

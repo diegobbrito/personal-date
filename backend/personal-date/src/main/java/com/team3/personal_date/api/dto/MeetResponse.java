@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public record MeetResponse(
         UUID id,
+        String senderName,
         String receiverName,
         String eventDate,
         String eventTime,

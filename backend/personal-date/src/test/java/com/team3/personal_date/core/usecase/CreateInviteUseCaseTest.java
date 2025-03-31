@@ -42,6 +42,7 @@ class CreateInviteUseCaseTest {
         createInviteRequest = new CreateInviteRequest(
                 new ClientRequest("John Doe", "john.doe@example.com"),
                 List.of(new MeetRequest(
+                                "Sender Name",
                         "Receiver Name",
                         "2023-10-10",
                         "10:00",
@@ -50,6 +51,7 @@ class CreateInviteUseCaseTest {
                         "123 Street",
                         "Template"),
                         new MeetRequest(
+                                "Sender Name",
                                 "Receiver Name 2",
                                 "2023-10-11",
                                 "10:00",
@@ -89,7 +91,7 @@ class CreateInviteUseCaseTest {
     void testCreateInvite_SingleMeet() {
         createInviteRequest = new CreateInviteRequest(
                 new ClientRequest("John Doe", "john.doe@example.com"),
-                List.of(new MeetRequest("Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template"))
+                List.of(new MeetRequest("Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template"))
         );
 
         var invite = InviteAdapter.toInvite(createInviteRequest);

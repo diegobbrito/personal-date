@@ -14,6 +14,7 @@ import java.util.UUID;
 public class Meet {
 
     private UUID id;
+    private String senderName;
     private String receiverName;
     private String eventDate;
     private String eventTime;
@@ -23,8 +24,8 @@ public class Meet {
     private String template;
     private boolean isSelected;
 
-
-    public Meet(String receiverName, String eventDate, String eventTime, String message, String fontFamily, String address, String template) {
+    public Meet(String senderName, String receiverName, String eventDate, String eventTime, String message, String fontFamily, String address, String template) {
+        this.senderName = senderName;
         this.receiverName = receiverName;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
