@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,9 @@ class SendMailUseCaseTest {
 
     @Mock
     private JavaMailSender mailSender;
+
+    @Mock
+    private TemplateEngine templateEngine;
 
     @InjectMocks
     private SendMailUseCase sendMailUseCase;
@@ -47,9 +52,11 @@ class SendMailUseCaseTest {
     void testSendInviteEmail_Success() throws Exception {
         MimeMessage mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
+        when(templateEngine.process(eq("invite-email"), any(Context.class))).thenReturn("Email Content");
 
         sendMailUseCase.sendInviteEmail(invite);
 
+        verify(templateEngine, times(1)).process(eq("invite-email"), any(Context.class));
         verify(mailSender, times(1)).send(mimeMessage);
     }
 
@@ -57,6 +64,7 @@ class SendMailUseCaseTest {
     void testSendInviteEmail_Failure() throws Exception {
         MimeMessage mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
+        when(templateEngine.process(eq("invite-email"), any(Context.class))).thenReturn("Email Content");
         doThrow(new RuntimeException("Mail sending failed")).when(mailSender).send(mimeMessage);
 
         assertThrows(MailNotSendException.class, () -> sendMailUseCase.sendInviteEmail(invite));

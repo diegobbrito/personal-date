@@ -28,6 +28,9 @@ class UpdateInviteUseCaseTest {
     @Mock
     private IInviteRepository inviteRepository;
 
+    @Mock
+    private SendMailUseCase sendMailUseCase;
+
     @InjectMocks
     private UpdateInviteUseCase updateInviteUseCase;
 
