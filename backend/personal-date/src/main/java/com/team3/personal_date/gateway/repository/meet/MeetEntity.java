@@ -19,6 +19,7 @@ public class MeetEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private String senderName;
     private String receiverName;
     private String eventDate;
     private String eventTime;
@@ -31,8 +32,9 @@ public class MeetEntity {
     @ManyToOne
     private InviteEntity invite;
 
-    public MeetEntity(UUID id, String receiverName, String eventDate, String eventTime, String message, String fontFamily, String address, String template, boolean isSelected) {
+    public MeetEntity(UUID id, String senderName, String receiverName, String eventDate, String eventTime, String message, String fontFamily, String address, String template, boolean isSelected) {
         this.id = id;
+        this.senderName = senderName;
         this.receiverName = receiverName;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
