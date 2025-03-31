@@ -33,6 +33,7 @@ const InviteInputField: React.FC<InputFieldProps> = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      required
     />
   </div>
 );

@@ -27,6 +27,7 @@ const InviteSelectField: React.FC<SelectFieldProps> = ({
       name={name}
       value={value}
       onChange={onChange}
+      required
     >
       {options.map((option) => (
         <option value={option.value} key={option.value} className="text-black">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InviteInputField from "../components/Fields/InviteInputField";
 import InviteSelectField from "../components/Fields/InviteSelectField";
 import InviteTextAreaField from "../components/Fields/InviteTextAreaField";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 type TemplateType = "classic" | "modern" | "elegant" | "fun";
 
 interface InviteFormData {
+  clientName: string;
   sender: string;
   eventDate: string;
   receiverName: string;
@@ -24,10 +25,7 @@ const fontOptions = [
   { value: "'Times New Roman', serif", label: "Times New Roman" },
   { value: "'Courier New', monospace", label: "Courier New" },
   { value: "'Georgia', serif", label: "Georgia" },
-  {
-    value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
-    label: "Palatino",
-  },
+  { value: "'Palatino Linotype', 'Book Antiqua', Palatino, serif", label: "Palatino" },
   { value: "'Brush Script MT', cursive", label: "Brush Script" },
 ];
 
@@ -39,26 +37,44 @@ const templateOptions = [
 ];
 
 const MakeYourInvite: React.FC = () => {
-  const [selectedPackage, setSelectedPackage] = useState<"simple" | "complete">(
-    "simple"
-  );
-  const [formData, setFormData] = useState<InviteFormData[]>([
-    {
-      sender: "",
-      eventDate: "",
-      receiverName: "",
-      eventTime: "",
-      message: "",
-      address: "",
-      fontFamily: "Arial, sans-serif",
-      template: "classic",
-    },
-  ]);
+  const [selectedPackage, setSelectedPackage] = useState<"simple" | "complete">("simple");
+  const [formData, setFormData] = useState<InviteFormData[]>([{
+    sender: "",
+    eventDate: "",
+    receiverName: "",
+    eventTime: "",
+    message: "",
+    address: "",
+    fontFamily: "Arial, sans-serif",
+    template: "classic",
+    clientName: "",
+  }]);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const validateDate = (dateString: string): boolean => {
+    if (!dateString) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(dateString);
+    return selectedDate >= today;
+  };
+
+  useEffect(() => {
+    const isValid = formData.every((invite) => {
+      return (
+        invite.sender.trim() !== "" &&
+        invite.receiverName.trim() !== "" &&
+        invite.eventDate.trim() !== "" &&
+        invite.eventTime.trim() !== "" &&
+        invite.address.trim() !== "" &&
+        validateDate(invite.eventDate)
+      );
+    });
+    setIsFormValid(isValid);
+  }, [formData]);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     index: number
   ) => {
     const { name, value } = e.target;
@@ -84,38 +100,21 @@ const MakeYourInvite: React.FC = () => {
               address: "",
               fontFamily: "Arial, sans-serif",
               template: "classic",
+              clientName: "",
             },
           ]
         : [formData[0]]
     );
   };
 
-  const validateDate = (dateString: string): boolean => {
-    if (!dateString) return true;
-    
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); 
-    
-    const selectedDate = new Date(dateString);
-    
-    return selectedDate >= today;
-  };
-
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-
-    const hasInvalidDate = formData.some(invite => {
-      return !validateDate(invite.eventDate);
-    });
-
-    if (hasInvalidDate) {
-      alert("A data do evento não pode ser anterior ao dia atual!");
+    if (!isFormValid) {
+      alert("Por favor, preencha todos os campos obrigatórios corretamente antes de gerar o convite.");
       return;
     }
-
     navigate("/checkout", { state: { formData } });
   };
 
@@ -127,24 +126,16 @@ const MakeYourInvite: React.FC = () => {
         </h1>
       </div>
 
-      <PackageSelector
-        onSelectPackage={handleSelectPackage}
-        selectedPackage={selectedPackage}
-      />
+      <PackageSelector onSelectPackage={handleSelectPackage} selectedPackage={selectedPackage} />
 
       <div className="flex flex-col lg:flex-row items-start gap-8 py-8 px-4 sm:px-6 md:px-8 w-full max-w-7xl mx-auto">
         <div className="w-full lg:w-1/2 bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
             {formData.map((invite, index) => (
-              <div
-                key={index}
-                className="border border-white/20 p-6 mb-6 rounded-lg bg-white/5"
-              >
-                <h2 className="text-white text-xl font-bold mb-4">
-                  Convite {index + 1}
-                </h2>
+              <div key={index} className="border border-white/20 p-6 mb-6 rounded-lg bg-white/5">
+                <h2 className="text-white text-xl font-bold mb-4">Convite {index + 1}</h2>
                 <InviteInputField
-                  label="Remetente"
+                  label="Remetente*"
                   name="sender"
                   value={invite.sender}
                   onChange={(e) => handleChange(e, index)}
@@ -152,16 +143,16 @@ const MakeYourInvite: React.FC = () => {
                   id={""}
                 />
                 <InviteInputField
-                  label="Nome do Convidado"
+                  label="Nome do Convidado*"
                   name="receiverName"
                   value={invite.receiverName}
                   onChange={(e) => handleChange(e, index)}
                   placeholder="Para quem é este convite?"
-                  id={`receiverName-${index}`}
+                  id={""}
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InviteInputField
-                    label="Data do Evento"
+                    label="Data do Evento*"
                     name="eventDate"
                     type="date"
                     value={invite.eventDate}
@@ -169,7 +160,7 @@ const MakeYourInvite: React.FC = () => {
                     id={""}
                   />
                   <InviteInputField
-                    label="Horário"
+                    label="Horário*"
                     name="eventTime"
                     type="time"
                     value={invite.eventTime}
@@ -177,9 +168,9 @@ const MakeYourInvite: React.FC = () => {
                     id={""}
                   />
                 </div>
-                
+
                 <InviteInputField
-                  label="Endereço"
+                  label="Endereço*"
                   name="address"
                   value={invite.address}
                   onChange={(e) => handleChange(e, index)}
@@ -215,19 +206,19 @@ const MakeYourInvite: React.FC = () => {
             ))}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg"
-              onClick={handleSubmit}
+              className={`w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg ${!isFormValid ? "opacity-50 cursor-not-allowed" : "hover:from-blue-600 hover:to-purple-700"}`}
+              disabled={!isFormValid}
             >
               Gerar Convite
             </button>
+            {!isFormValid && <p className="text-red-300 text-sm text-center">Preencha todos os campos obrigatórios marcados com *</p>}
           </form>
         </div>
+
         <div className="w-full lg:w-1/2 flex flex-col items-center space-y-8">
           {formData.map((invite, index) => (
             <div key={index} className="w-full max-w-2xl">
-              <h3 className="text-white text-xl font-bold mb-4 text-center">
-                Prévia do Convite {index + 1}
-              </h3>
+              <h3 className="text-white text-xl font-bold mb-4 text-center">Prévia do Convite {index + 1}</h3>
               <InvitePreview formData={invite} />
             </div>
           ))}
