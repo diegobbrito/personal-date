@@ -19,6 +19,7 @@ CREATE TABLE  meets (
     font_family varchar(255),
     is_selected boolean not null,
     message varchar(255),
+    sender_name varchar(255),
     receiver_name varchar(255),
     template varchar(255),
     invite_id uuid,
