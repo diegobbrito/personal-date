@@ -15,6 +15,7 @@ interface InviteData {
   fontFamily: string;
   address: string;
   template: "classic" | "modern" | "elegant" | "fun";
+  clientName: string;
 }
 
 interface ApiResponse {
@@ -86,6 +87,7 @@ const DisplayInvite: React.FC = () => {
           <div className="flex justify-center">
             <InvitePreview
               formData={{
+                clientName: invite.clientName,
                 receiverName: invite.receiverName,
                 eventDate: invite.eventDate,
                 eventTime: invite.eventTime,
