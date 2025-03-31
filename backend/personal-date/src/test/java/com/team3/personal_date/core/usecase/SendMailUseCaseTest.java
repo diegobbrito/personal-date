@@ -40,7 +40,7 @@ class SendMailUseCaseTest {
     @BeforeEach
     void setUp() {
         Client client = new Client(UUID.randomUUID(), "John Doe", new Mail("john.doe@example.com"));
-        Meet meet = new Meet(UUID.randomUUID(), "Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template", true);
+        Meet meet = new Meet(UUID.randomUUID(), "Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template", true);
         invite = new Invite();
         invite.setClient(client);
         invite.setMeets(List.of(meet));

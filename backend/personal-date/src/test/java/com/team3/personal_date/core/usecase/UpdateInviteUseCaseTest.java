@@ -44,7 +44,7 @@ class UpdateInviteUseCaseTest {
 
         meetId = UUID.randomUUID();
         ClientEntity clientEntity = new ClientEntity(UUID.randomUUID(), "John Doe", "test@john.com");
-        Meet meet = new Meet(meetId, "Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template", false);
+        Meet meet = new Meet(meetId, "Sender Name","Receiver Name", "2023-10-10", "10:00", "Message", "Arial", "123 Street", "Template", false);
         inviteEntity = new InviteEntity();
         inviteEntity.setId(inviteId);
         inviteEntity.setClient(clientEntity);
