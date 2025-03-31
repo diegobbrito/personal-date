@@ -19,9 +19,11 @@ import java.util.UUID;
 public class UpdateInviteUseCase implements IUpdateInviteUseCase {
 
     private final IInviteRepository inviteRepository;
+    private final SendMailUseCase sendMailUseCase;
 
-    public UpdateInviteUseCase(IInviteRepository inviteRepository) {
+    public UpdateInviteUseCase(IInviteRepository inviteRepository, SendMailUseCase sendMailUseCase) {
         this.inviteRepository = inviteRepository;
+        this.sendMailUseCase = sendMailUseCase;
     }
 
     @Override
@@ -50,6 +52,7 @@ public class UpdateInviteUseCase implements IUpdateInviteUseCase {
         }
 
         inviteRepository.update(invite);
+        sendMailUseCase.sendSelectedInviteEmail(invite);
 
         return InviteAdapter.toInviteResponse(invite.getId(),
                 invite.getClient().getName(),
@@ -57,5 +60,7 @@ public class UpdateInviteUseCase implements IUpdateInviteUseCase {
                 .filter(Meet::isSelected)
                 .findFirst()
                 .orElseThrow(() -> new MeetNotFoundException("Meet not found")));
+
+
     }
 }

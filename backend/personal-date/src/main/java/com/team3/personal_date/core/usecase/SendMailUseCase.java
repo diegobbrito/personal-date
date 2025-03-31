@@ -1,6 +1,7 @@
 package com.team3.personal_date.core.usecase;
 
 import com.team3.personal_date.core.entity.Invite;
+import com.team3.personal_date.core.entity.Meet;
 import com.team3.personal_date.core.exception.MailNotSendException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -90,5 +91,61 @@ public class SendMailUseCase implements ISendMailUseCase{
         }
     }
 
+    public void sendSelectedInviteEmail(Invite invite) {
+
+        Meet selectedMeet = invite.getMeets().stream()
+                .filter(Meet::isSelected)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No selected meet found"));
+
+        String subject = invite.getClient().getName() + ", seu convite foi confirmado!";
+        String content = String.format(
+                """
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { color: #4a6baf; text-align: center; }
+                        .footer { margin-top: 30px; font-size: 12px; color: #777; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h2>Olá %s!</h2>
+                        </div>
+                
+                        <p>Seu convite foi confirmado para o dia %s, às %s, no local %s. Estamos ansiosos para esse encontro acontecer!</p>
+                
+                        <div class="footer">
+                            <p>Atenciosamente,<br>
+                            <strong>Equipe Personal Date</strong></p>
+                            <p><small>Este é um e-mail automático, por favor não responda diretamente.</small></p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                """,
+                invite.getClient().getName(),
+                selectedMeet.getEventDate(),
+                selectedMeet.getEventTime(),
+                selectedMeet.getAddress()
+        );
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(invite.getClient().getMail().getValue());
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
+            log.info("Confirmation mail sent for invite id: {}", invite.getId());
+        } catch (Exception e) {
+            log.error("Error sending confirmation mail for invite id: {}", invite.getId(), e);
+            throw new MailNotSendException("Error sending confirmation email");
+        }
+    }
 }
 
