@@ -19,9 +19,9 @@ import java.util.UUID;
 public class UpdateInviteUseCase implements IUpdateInviteUseCase {
 
     private final IInviteRepository inviteRepository;
-    private final SendMailUseCase sendMailUseCase;
+    private final ISendMailUseCase sendMailUseCase;
 
-    public UpdateInviteUseCase(IInviteRepository inviteRepository, SendMailUseCase sendMailUseCase) {
+    public UpdateInviteUseCase(IInviteRepository inviteRepository, ISendMailUseCase sendMailUseCase) {
         this.inviteRepository = inviteRepository;
         this.sendMailUseCase = sendMailUseCase;
     }
@@ -52,7 +52,7 @@ public class UpdateInviteUseCase implements IUpdateInviteUseCase {
         }
 
         inviteRepository.update(invite);
-        sendMailUseCase.sendSelectedInviteEmail(invite);
+        sendMailUseCase.sendSelectedInviteMail(invite);
 
         return InviteAdapter.toInviteResponse(invite.getId(),
                 invite.getClient().getName(),

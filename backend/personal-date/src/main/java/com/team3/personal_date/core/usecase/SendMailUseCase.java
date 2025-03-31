@@ -3,87 +3,44 @@ package com.team3.personal_date.core.usecase;
 import com.team3.personal_date.core.entity.Invite;
 import com.team3.personal_date.core.entity.Meet;
 import com.team3.personal_date.core.exception.MailNotSendException;
+import com.team3.personal_date.core.exception.MeetNotFoundException;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 @Slf4j
 @Service
-public class SendMailUseCase implements ISendMailUseCase{
+public class SendMailUseCase implements ISendMailUseCase {
+
     private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
 
     @Value("${app.host}")
     private String inviteHost;
 
-    public SendMailUseCase(JavaMailSender mailSender) {
+    public SendMailUseCase(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
     }
 
     public void sendInviteEmail(Invite invite) {
         String inviteLink = inviteHost + invite.getId();
         String subject = invite.getClient().getName() + ", seu convite está pronto!";
 
-        String content = String.format(
-                """
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <style>
-                        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
-                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                        .header { color: #4a6baf; text-align: center; }
-                        .button {
-                            display: inline-block;
-                            padding: 12px 24px;
-                            background-color: #4a6baf;
-                            color: white !important;
-                            text-decoration: none;
-                            border-radius: 4px;
-                            font-weight: bold;
-                            margin: 15px 0;
-                        }
-                        .footer { margin-top: 30px; font-size: 12px; color: #777; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h2>Olá %s!</h2>
-                        </div>
-                
-                        <p>Seu convite exclusivo está disponível:</p>
-                
-                        <div style="text-align: center; margin: 25px 0;">
-                            <a href="%s" class="button">Acessar Convite</a>
-                        </div>
-                
-                        <p>Ou copie este link:<br>
-                        <code>%s</code></p>
-                
-                        <div class="footer">
-                            <p>Atenciosamente,<br>
-                            <strong>Equipe Personal Date</strong></p>
-                            <p><small>Este é um e-mail automático, por favor não responda diretamente.</small></p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-                """,
-                invite.getClient().getName(),
-                inviteLink,
-                inviteLink
-        );
+        Context context = new Context();
+        context.setVariable("clientName", invite.getClient().getName());
+        context.setVariable("inviteLink", inviteLink);
+
+        String content = templateEngine.process("invite-email", context);
 
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(invite.getClient().getMail().getValue());
-            helper.setSubject(subject);
-            helper.setText(content, true);
-            mailSender.send(message);
+            sendMail(invite, subject, content);
             log.info("Mail sent to invite id: {}", invite.getId());
         } catch (Exception e) {
             log.error("Error sending mail {}", invite.getId(), e);
@@ -91,61 +48,37 @@ public class SendMailUseCase implements ISendMailUseCase{
         }
     }
 
-    public void sendSelectedInviteEmail(Invite invite) {
-
+    public void sendSelectedInviteMail(Invite invite) {
         Meet selectedMeet = invite.getMeets().stream()
                 .filter(Meet::isSelected)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("No selected meet found"));
+                .orElseThrow(() -> new MeetNotFoundException("No selected meet found"));
 
         String subject = invite.getClient().getName() + ", seu convite foi confirmado!";
-        String content = String.format(
-                """
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <style>
-                        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
-                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                        .header { color: #4a6baf; text-align: center; }
-                        .footer { margin-top: 30px; font-size: 12px; color: #777; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h2>Olá %s!</h2>
-                        </div>
-                
-                        <p>Seu convite foi confirmado para o dia %s, às %s, no local %s. Estamos ansiosos para esse encontro acontecer!</p>
-                
-                        <div class="footer">
-                            <p>Atenciosamente,<br>
-                            <strong>Equipe Personal Date</strong></p>
-                            <p><small>Este é um e-mail automático, por favor não responda diretamente.</small></p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-                """,
-                invite.getClient().getName(),
-                selectedMeet.getEventDate(),
-                selectedMeet.getEventTime(),
-                selectedMeet.getAddress()
-        );
+
+        Context context = new Context();
+        context.setVariable("clientName", invite.getClient().getName());
+        context.setVariable("eventDate", selectedMeet.getEventDate());
+        context.setVariable("eventTime", selectedMeet.getEventTime());
+        context.setVariable("address", selectedMeet.getAddress());
+
+        String content = templateEngine.process("selected-invite-email", context);
 
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(invite.getClient().getMail().getValue());
-            helper.setSubject(subject);
-            helper.setText(content, true);
-            mailSender.send(message);
+            sendMail(invite, subject, content);
             log.info("Confirmation mail sent for invite id: {}", invite.getId());
         } catch (Exception e) {
             log.error("Error sending confirmation mail for invite id: {}", invite.getId(), e);
             throw new MailNotSendException("Error sending confirmation email");
         }
     }
-}
 
+    private void sendMail(Invite invite, String subject, String content) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setTo(invite.getClient().getMail().getValue());
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
+}
