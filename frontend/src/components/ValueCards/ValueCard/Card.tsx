@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ValueCardProps {
   title: string;
@@ -14,6 +15,12 @@ const ValueCard: React.FC<ValueCardProps> = ({
   features,
   buttonText,
 }) => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/makeyourinvite");
+  };
+  
   return (
     <div className="w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300 bg-white">
       <h2 className="text-2xl font-bold text-center py-8">{title}</h2>
@@ -27,6 +34,7 @@ const ValueCard: React.FC<ValueCardProps> = ({
       </div>
       <button
         className={`bg-[#f76d02] text-white w-[200px] rounded-md font-medium my-6 mx-auto px-6 py-3 self-end`}
+        onClick={handleRedirect}
       >
         {buttonText}
       </button>

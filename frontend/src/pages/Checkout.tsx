@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import InvitePreview from "../components/Preview/InvitePreview";
 import axios from "axios";
 
 interface InviteFormData {
   sender: string;
+  clientName: string;
   receiverName: string;
   eventDate: string;
   eventTime: string;
@@ -17,12 +18,11 @@ interface InviteFormData {
 const Checkout: React.FC = () => {
   const location = useLocation();
   const formData = (location.state?.formData as InviteFormData[]) || [];
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-
-  if(formData.length === 0){
-    return <Navigate to="/" replace/>
+  if (formData.length === 0) {
+    return <Navigate to="/" replace />;
   }
 
   const payload = {
@@ -47,13 +47,14 @@ const Checkout: React.FC = () => {
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
-      if (response.status === 200) {
-        alert("Compra finalizada com sucesso!");
-
+      if (response.status === 201) {
+        alert("Convite gerado com sucesso, cheque seu email!");
       }
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
-      alert("Ocorreu um erro ao processar sua compra. Por favor, tente novamente.");
+      alert(
+        "Ocorreu um erro ao processar sua compra. Por favor, tente novamente."
+      );
     }
   };
 
@@ -71,19 +72,23 @@ const Checkout: React.FC = () => {
               formData.map((invite, index) => (
                 <div
                   key={index}
-                  className="w-full sm:w-[80%] md:w-[48%] lg:w-[30%] flex justify-center"
+                  className="w-full sm:w-[90%] md:w-[58%] lg:w-[35%] flex justify-center"
                 >
                   <InvitePreview formData={invite} />
                 </div>
               ))
             ) : (
-              <p className="text-white text-center w-full">Nenhum convite encontrado.</p>
+              <p className="text-white text-center w-full">
+                Nenhum convite encontrado.
+              </p>
             )}
           </div>
         </div>
 
         <div className="bg-white/10 rounded-xl shadow-xl p-6">
-          <h2 className="text-2xl text-white font-bold mb-4">Informações Pessoais</h2>
+          <h2 className="text-2xl text-white font-bold mb-4">
+            Informações Pessoais
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
