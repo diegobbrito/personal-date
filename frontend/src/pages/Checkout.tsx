@@ -72,7 +72,7 @@ const Checkout: React.FC = () => {
               formData.map((invite, index) => (
                 <div
                   key={index}
-                  className="w-full sm:w-[80%] md:w-[48%] lg:w-[30%] flex justify-center"
+                  className="w-full sm:w-[90%] md:w-[58%] lg:w-[35%] flex justify-center"
                 >
                   <InvitePreview formData={invite} />
                 </div>
