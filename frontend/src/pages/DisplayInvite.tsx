@@ -41,7 +41,7 @@ const InvitePage: React.FC = () => {
         const response = await axios.get<ApiResponse>(
           `https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites/${id}`
         );
-
+        
         if (response.data.meetings) {
           if (response.data.meetings.length >= 2) {
             setMeetings(response.data.meetings);
