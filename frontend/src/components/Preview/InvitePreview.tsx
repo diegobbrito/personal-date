@@ -4,6 +4,7 @@ type TemplateType = "classic" | "modern" | "elegant" | "fun";
 
 interface InvitePreviewProps {
   formData: {
+    clientName:string;
     sender: string;
     receiverName: string;
     eventDate: string;
@@ -39,7 +40,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </h2>
             <div className="border-l-4 border-purple-500 pl-4 my-4">
               <p className="text-xl">
-                {formData.sender || "Remetente"} convida
+                {formData.sender ||"Remetente"} convida
               </p>
               <p className="text-lg mt-2">
                 {formData.receiverName || "Nome do Convidado"}
