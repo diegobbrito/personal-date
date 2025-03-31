@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
         body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
@@ -9,18 +9,20 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h2>Olá \${clientName}!</h2>
-        </div>
-
-        <p>Seu convite foi confirmado para o dia \${eventDate}, às \${eventTime}, no local \${address}. Estamos ansiosos para esse encontro acontecer!</p>
-
-        <div class="footer">
-            <p>Atenciosamente,<br>
-            <strong>Equipe Personal Date</strong></p>
-            <p><small>Este é um e-mail automático, por favor não responda diretamente.</small></p>
-        </div>
+<div class="container">
+    <div class="header">
+        <h2 th:text="'Olá ' + ${clientName} + '!'">Olá [Nome do Cliente]!</h2>
     </div>
+
+    <p th:text="'Seu convite foi confirmado para o dia ' + ${eventDate} + ', às ' + ${eventTime} + ', no local ' + ${address} + '. Estamos ansiosos para esse encontro acontecer!'">
+        Seu convite foi confirmado para o dia [data do evento], às [hora do evento], no local [endereço]. Estamos ansiosos para esse encontro acontecer!
+    </p>
+
+    <div class="footer">
+        <p>Atenciosamente,<br>
+            <strong>Equipe Personal Date</strong></p>
+        <p><small>Este é um e-mail automático, por favor não responda diretamente.</small></p>
+    </div>
+</div>
 </body>
 </html>
