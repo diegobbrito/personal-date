@@ -87,7 +87,7 @@ const DisplayInvite: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-purple-900 py-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl text-white font-bold text-center mb-8">
-          O seu convite é:
+          Convite
         </h1>
 
         <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl p-6">
