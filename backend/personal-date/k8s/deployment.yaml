@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: meet
-          image: diegobbrito17/hackaton-team-3:latest
+          image: docker_user/docker_project:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
