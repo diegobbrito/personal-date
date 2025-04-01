@@ -1,7 +1,7 @@
 package com.team3.personal_date.api.dto;
 
 public record MeetRequest(
-        String senderName,
+        String sender,
         String receiverName,
         String eventDate,
         String eventTime,
