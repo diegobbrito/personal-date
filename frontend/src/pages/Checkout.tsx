@@ -26,6 +26,7 @@ const Checkout: React.FC = () => {
     return <Navigate to="/" replace />;
   }
 
+
   const payload = {
     client: { name, mail: email },
     meetings: formData.map((invite) => ({
@@ -39,12 +40,13 @@ const Checkout: React.FC = () => {
       template: invite.template,
     })),
   };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites",
+       `${import.meta.env.VITE_BACKEND_LINK}/api/v1/invites`,
         payload,
         { headers: { "Content-Type": "application/json" } }
       );

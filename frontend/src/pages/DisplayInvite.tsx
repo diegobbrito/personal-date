@@ -35,12 +35,15 @@ const InvitePage: React.FC = () => {
   const [selectedMeetId, setSelectedMeetId] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+
   useEffect(() => {
     const fetchInviteData = async () => {
       try {
         const response = await axios.get<ApiResponse>(  
-          `https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites/${id}` //First we get the data from the api, having 1 or 2 invites
+          `${import.meta.env.VITE_BACKEND_LINK}/api/v1/invites/${id}` //First we get the data from the api, having 1 or 2 invites
         );
+
+        
         
         if (response.data.meetings) {
           if (response.data.meetings.length >= 2) { // if there's more than 1 invite, an choosing screen will show up
@@ -66,8 +69,8 @@ const InvitePage: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites/${id}`, // When the invite is chosen, we do a patch on API
-        { meetId },                                                                                 // The patch will leave only the selected invitation in the API
+        `${import.meta.env.VITE_BACKEND_LINK}/api/v1/invites/${id}`, // When the invite is chosen, we do a patch on API
+        { meetId },                                                  // The patch will leave only the selected invitation in the API
         {
           headers: {
             "Content-Type": "application/json",
