@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import InvitePreview from "../components/Preview/InvitePreview";
 import axios from "axios";
 
@@ -16,6 +16,7 @@ interface InviteFormData {
 }
 
 const Checkout: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const formData = (location.state?.formData as InviteFormData[]) || [];
   const [name, setName] = useState("");
@@ -49,6 +50,12 @@ const Checkout: React.FC = () => {
       );
       if (response.status === 201) {
         alert("Convite gerado com sucesso, cheque seu email!");
+
+        
+
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
       }
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
