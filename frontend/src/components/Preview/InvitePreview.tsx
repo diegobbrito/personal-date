@@ -35,9 +35,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
       case "modern":
         return (
           <div className="space-y-6 break-words">
-            <h2 className="text-3xl font-light uppercase tracking-widest">
-              Convite
-            </h2>
+            
             <div className="border-l-4 border-purple-500 pl-4 my-4">
               <p className="text-xl">
                 {formData.sender ||"Remetente"} convida
@@ -62,7 +60,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </p>
             <div className={`bg-gray-100 ${messageStyles}`}>
               <p className="italic break-words">
-                {formData.message || "Nenhuma mensagem informada"}
+                {formData.message || " "}
               </p>
             </div>
           </div>
@@ -70,7 +68,6 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
       case "elegant":
         return (
           <div className="text-center space-y-6 break-words">
-            <h2 className="text-4xl font-serif mb-8">Convite</h2>
             <p className="text-xl mb-2">É com grande prazer que</p>
             <p className="text-2xl font-serif mb-4">
               {formData.sender || "Remetente"}
@@ -90,7 +87,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </p>
             <div className={`border-t pt-8 ${messageStyles}`}>
               <p className="break-words">
-                {formData.message || "Nenhuma mensagem informada"}
+                {formData.message || " "}
               </p>
             </div>
           </div>
@@ -124,7 +121,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
                 💌 Mensagem especial:
               </p>
               <p className="break-words">
-                {formData.message || "Nenhuma mensagem informada"}
+                {formData.message || " "}
               </p>
             </div>
           </div>
@@ -132,7 +129,6 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
       case "minimalist":
         return (
           <div className="space-y-4 break-words">
-            <h2 className="text-3xl font-light text-center mb-6">Convite</h2>
             <p className="text-xl text-center mb-8">
               Você está cordialmente convidado(a)
             </p>
@@ -145,7 +141,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </div>
             <div className={`border-t pt-6 ${messageStyles}`}>
               <p className="break-words">
-                {formData.message || "Nenhuma mensagem informada"}
+                {formData.message || " "}
               </p>
             </div>
           </div>
@@ -153,7 +149,6 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
       case "formal":
         return (
           <div className="space-y-6 break-words text-center">
-            <h2 className="text-3xl font-serif mb-8">Convite Formal</h2>
             <p className="text-xl mb-6">Temos o prazer de convidar</p>
             <p className="text-2xl font-serif mb-8 border-b pb-6">
               {formData.receiverName || "Nome do Convidado"}
@@ -167,7 +162,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </div>
             <div className={`bg-gray-50 p-6 ${messageStyles}`}>
               <p className="break-words">
-                {formData.message || "Nenhuma mensagem informada"}
+                {formData.message || " "}
               </p>
             </div>
           </div>
@@ -175,7 +170,6 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
       default: // classic
         return (
           <div className="space-y-4 break-words">
-            <h2 className="text-4xl font-bold text-center">Convite</h2>
             <p className="text-xl md:text-2xl break-words w-full">
               <span className="font-semibold">De:</span>{" "}
               {formData.sender || "Remetente"}
@@ -204,7 +198,7 @@ const InvitePreview: React.FC<InvitePreviewProps> = ({ formData }) => {
             </p>
             <div className={`bg-gray-50 ${messageStyles}`}>
               <p className="break-words">
-                {formData.message || "Nenhuma mensagem informada"}
+                {formData.message || " "}
               </p>
             </div>
           </div>

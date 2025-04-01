@@ -187,6 +187,10 @@ const InvitePage: React.FC = () => {
               />
             </div>
           </div>
+
+          <p className="text-white mt-4 text-center font-bold text-2xl"> Contagem regressiva para algo inesquecível!</p>
+          <p className="text-center"> 👇</p>
+          
           <div className="mt-6">
             <CountdownTimer
               targetDate={inviteData.eventDate}
