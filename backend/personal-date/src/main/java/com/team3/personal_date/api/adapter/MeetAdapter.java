@@ -11,7 +11,7 @@ public class MeetAdapter {
     public static Meet toMeet(MeetRequest meetRequest) {
 
         return new Meet(
-                meetRequest.senderName(),
+                meetRequest.sender(),
                 meetRequest.receiverName(),
                 meetRequest.eventDate(),
                 meetRequest.eventTime(),
