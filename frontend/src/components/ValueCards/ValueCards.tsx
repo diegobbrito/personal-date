@@ -5,13 +5,13 @@ const ValueCards: React.FC = () => {
   const basicFeatures: string[] = [
     "Única opção de convite",
     "Templates limitados",
-    "Convite enviado por QRCode",
+ 
   ];
 
   const intermediateFeatures: string[] = [
     "Mais opções de convite",
     "Mais templates",
-    "Convite enviado por QRCode",
+   
   ];
 
   return (
@@ -19,7 +19,7 @@ const ValueCards: React.FC = () => {
       <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-8">
         <ValueCard
           title="Pacote Simples"
-          price="R$ 1.99"
+          price="De R$ 1.99 por R$ 0.00"
           features={basicFeatures}
           buttonText="Comprar Agora"
           buttonColor="[#f76d02]"
@@ -27,7 +27,7 @@ const ValueCards: React.FC = () => {
 
         <ValueCard
           title="Pacote Completo"
-          price="R$ 9.99"
+          price="De R$ 4.99 por R$ 0.00"
           features={intermediateFeatures}
           buttonText="Comprar Agora"
           buttonColor="[#f76d02]"
