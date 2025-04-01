@@ -25,8 +25,8 @@ jobs:
           context: ./backend/personal-date
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:latest
-            ${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROJECT }}:latest
+            ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROJECT }}:v${{ github.run_number }}
 
   deploy-ocp:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       - name: Set image in deployment
         working-directory: ./backend/personal-date/k8s
         run: |
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/hackaton-team-3:v${{ github.run_number }}"
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROJECT }}:v${{ github.run_number }}"
           echo "Updating deployment with image: $IMAGE_NAME"
           sed -i 's|image: .*|image: '"$IMAGE_NAME"'|' deployment.yaml
 
