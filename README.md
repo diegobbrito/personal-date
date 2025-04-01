@@ -35,6 +35,12 @@ The application enables users to create customized event invitations, select mee
 - Docker and Docker Compose
 - PostgreSQL 13 (if running locally without Docker)
 - Maven 3.x
+- GitHub Secrets Configuration:
+  - DOCKER_USERNAME: Your Docker Hub username
+  - DOCKER_PROJECT: Your Docker project name
+  - DOCKER_PASSWORD: Your Docker Hub password
+  - OCP_SERVER: Your OpenShift server URL
+  - OCP_TOKEN: Your OpenShift token
 
 ### Installation
 
@@ -210,14 +216,13 @@ oc get pods -l app=meet
 oc get svc svc-meet
 ```
 
-### Files with help of AI
+### Files with AI help
 - README.md
 - ci.yml
 - cd.yml
 #### Backend
-- config/checkstyle
-- config/pmd
-- config/spotbugs
+- config/*
+- templates/*
 - test/*
 - compose.yaml
 #### Frontend
