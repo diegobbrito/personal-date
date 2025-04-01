@@ -35,18 +35,21 @@ const InvitePage: React.FC = () => {
   const [selectedMeetId, setSelectedMeetId] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+
   useEffect(() => {
     const fetchInviteData = async () => {
       try {
-        const response = await axios.get<ApiResponse>(
-          `https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites/${id}`
+        const response = await axios.get<ApiResponse>(  
+          `${import.meta.env.VITE_BACKEND_LINK}/api/v1/invites/${id}` //First we get the data from the api, having 1 or 2 invites
         );
+
+        
         
         if (response.data.meetings) {
-          if (response.data.meetings.length >= 2) {
+          if (response.data.meetings.length >= 2) { // if there's more than 1 invite, an choosing screen will show up
             setMeetings(response.data.meetings);
-          } else if (response.data.meetings.length === 1) {
-            setInviteData(response.data.meetings[0]);
+          } else if (response.data.meetings.length === 1) { //if there's 1 invite, the invitePage will show up
+            setInviteData(response.data.meetings[0]); 
           } else {
             setError("Convite não encontrado");
           }
@@ -66,8 +69,8 @@ const InvitePage: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `https://vs-invite-diegobrito-dev.apps.rm1.0a51.p1.openshiftapps.com/api/v1/invites/${id}`,
-        { meetId },
+        `${import.meta.env.VITE_BACKEND_LINK}/api/v1/invites/${id}`, // When the invite is chosen, we do a patch on API
+        { meetId },                                                  // The patch will leave only the selected invitation in the API
         {
           headers: {
             "Content-Type": "application/json",
@@ -90,6 +93,8 @@ const InvitePage: React.FC = () => {
       setLoading(false);
     }
   };
+
+  
 
   if (loading) {
     return (
