@@ -9,11 +9,7 @@
     "routes": [
       {
         "src": "/invite/.*",
-        "dest": "/index.html"
-      },
-      {
-        "src": "/.*",
-        "dest": "/index.html"
+        "dest": "/DisplayInvite.tsx"
       }
     ]
   }
