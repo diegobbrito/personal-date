@@ -221,4 +221,3 @@ oc get svc svc-meet
 - [Diego Brito](https://github.com/Diegobbrito)
 - [Igor Moura](https://github.com/igormooura)
 - [Felipe Hora](https://github.com/FelipeTorresHora)
-- [Ramon Alves](https://github.com/RamonVeirone)
