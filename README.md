@@ -216,19 +216,6 @@ oc get pods -l app=meet
 oc get svc svc-meet
 ```
 
-### Files with AI help
-- README.md
-- ci.yml
-- cd.yml
-#### Backend
-- config/*
-- templates/*
-- test/*
-- compose.yaml
-#### Frontend
-- pages/InvitePreview
-
-
 ## Contributors
 
 - [Diego Brito](https://github.com/Diegobbrito)
