@@ -1,6 +1,6 @@
-package com.team3.personal_date.core.valueobject;
+package com.personal_date.core.valueobject;
 
-import com.team3.personal_date.core.exception.InvalidMailException;
+import com.personal_date.core.exception.InvalidMailException;
 import lombok.Getter;
 
 import java.util.regex.Matcher;

@@ -1,7 +1,7 @@
-package com.team3.personal_date.gateway.repository.invite;
+package com.personal_date.gateway.repository.invite;
 
-import com.team3.personal_date.gateway.repository.client.ClientEntity;
-import com.team3.personal_date.gateway.repository.meet.MeetEntity;
+import com.personal_date.gateway.repository.client.ClientEntity;
+import com.personal_date.gateway.repository.meet.MeetEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

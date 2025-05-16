@@ -1,4 +1,4 @@
-package com.team3.personal_date.core.entity;
+package com.personal_date.core.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

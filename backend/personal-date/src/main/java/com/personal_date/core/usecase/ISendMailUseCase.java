@@ -1,6 +1,6 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.core.entity.Invite;
+import com.personal_date.core.entity.Invite;
 
 public interface ISendMailUseCase {
 

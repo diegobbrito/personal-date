@@ -1,6 +1,6 @@
-package com.team3.personal_date.gateway.repository.meet;
+package com.personal_date.gateway.repository.meet;
 
-import com.team3.personal_date.gateway.repository.IMeetRepository;
+import com.personal_date.gateway.repository.IMeetRepository;
 import org.springframework.stereotype.Component;
 
 @Component

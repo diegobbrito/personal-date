@@ -1,11 +1,11 @@
-package com.team3.personal_date.api.controller;
+package com.personal_date.api.controller;
 
-import com.team3.personal_date.api.dto.CreateInviteRequest;
-import com.team3.personal_date.api.dto.InviteResponse;
-import com.team3.personal_date.api.dto.UpdateInviteRequest;
-import com.team3.personal_date.core.usecase.ICreateInviteUseCase;
-import com.team3.personal_date.core.usecase.IGetInviteUseCase;
-import com.team3.personal_date.core.usecase.IUpdateInviteUseCase;
+import com.personal_date.api.dto.CreateInviteRequest;
+import com.personal_date.api.dto.InviteResponse;
+import com.personal_date.api.dto.UpdateInviteRequest;
+import com.personal_date.core.usecase.ICreateInviteUseCase;
+import com.personal_date.core.usecase.IGetInviteUseCase;
+import com.personal_date.core.usecase.IUpdateInviteUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

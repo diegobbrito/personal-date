@@ -1,13 +1,13 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.api.adapter.MeetAdapter;
-import com.team3.personal_date.api.dto.InviteResponse;
-import com.team3.personal_date.core.entity.Meet;
-import com.team3.personal_date.core.exception.InviteNotFoundException;
-import com.team3.personal_date.core.exception.MeetExpiredException;
-import com.team3.personal_date.gateway.repository.IInviteRepository;
-import com.team3.personal_date.gateway.repository.client.ClientEntity;
-import com.team3.personal_date.gateway.repository.invite.InviteEntity;
+import com.personal_date.api.adapter.MeetAdapter;
+import com.personal_date.api.dto.InviteResponse;
+import com.personal_date.core.entity.Meet;
+import com.personal_date.core.exception.InviteNotFoundException;
+import com.personal_date.core.exception.MeetExpiredException;
+import com.personal_date.gateway.repository.IInviteRepository;
+import com.personal_date.gateway.repository.client.ClientEntity;
+import com.personal_date.gateway.repository.invite.InviteEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

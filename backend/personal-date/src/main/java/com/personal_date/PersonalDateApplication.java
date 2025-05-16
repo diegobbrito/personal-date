@@ -1,4 +1,4 @@
-package com.team3.personal_date;
+package com.personal_date;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

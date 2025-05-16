@@ -1,9 +1,9 @@
-package com.team3.personal_date.api.controller;
+package com.personal_date.api.controller;
 
-import com.team3.personal_date.api.dto.*;
-import com.team3.personal_date.core.usecase.ICreateInviteUseCase;
-import com.team3.personal_date.core.usecase.IGetInviteUseCase;
-import com.team3.personal_date.core.usecase.IUpdateInviteUseCase;
+import com.personal_date.api.dto.*;
+import com.personal_date.core.usecase.ICreateInviteUseCase;
+import com.personal_date.core.usecase.IGetInviteUseCase;
+import com.personal_date.core.usecase.IUpdateInviteUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.team3.personal_date.api.handler;
+package com.personal_date.api.handler;
 
-import com.team3.personal_date.core.exception.*;
+import com.personal_date.core.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

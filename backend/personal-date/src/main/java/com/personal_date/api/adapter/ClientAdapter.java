@@ -1,9 +1,9 @@
-package com.team3.personal_date.api.adapter;
+package com.personal_date.api.adapter;
 
-import com.team3.personal_date.api.dto.ClientRequest;
-import com.team3.personal_date.core.entity.Client;
-import com.team3.personal_date.core.valueobject.Mail;
-import com.team3.personal_date.gateway.repository.client.ClientEntity;
+import com.personal_date.api.dto.ClientRequest;
+import com.personal_date.core.entity.Client;
+import com.personal_date.core.valueobject.Mail;
+import com.personal_date.gateway.repository.client.ClientEntity;
 
 public class ClientAdapter {
     public static Client toClient(ClientRequest clientRequest) {

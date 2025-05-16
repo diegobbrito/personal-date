@@ -1,4 +1,4 @@
-package com.team3.personal_date.api.dto;
+package com.personal_date.api.dto;
 
 import java.util.List;
 import java.util.UUID;
