@@ -1,8 +1,8 @@
-package com.team3.personal_date.api.controller;
+package com.personal_date.api.controller;
 
-import com.team3.personal_date.api.dto.InviteResponse;
-import com.team3.personal_date.api.dto.MeetResponse;
-import com.team3.personal_date.core.usecase.IGetInviteUseCase;
+import com.personal_date.api.dto.InviteResponse;
+import com.personal_date.api.dto.MeetResponse;
+import com.personal_date.core.usecase.IGetInviteUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

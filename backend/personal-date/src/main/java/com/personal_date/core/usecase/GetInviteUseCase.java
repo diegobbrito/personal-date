@@ -1,13 +1,13 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.api.adapter.InviteAdapter;
-import com.team3.personal_date.api.dto.InviteResponse;
-import com.team3.personal_date.core.entity.Invite;
-import com.team3.personal_date.core.entity.Meet;
-import com.team3.personal_date.core.exception.InviteNotFoundException;
-import com.team3.personal_date.core.exception.MeetExpiredException;
-import com.team3.personal_date.gateway.repository.IInviteRepository;
-import com.team3.personal_date.gateway.repository.invite.InviteEntity;
+import com.personal_date.api.adapter.InviteAdapter;
+import com.personal_date.api.dto.InviteResponse;
+import com.personal_date.core.entity.Invite;
+import com.personal_date.core.entity.Meet;
+import com.personal_date.core.exception.InviteNotFoundException;
+import com.personal_date.core.exception.MeetExpiredException;
+import com.personal_date.gateway.repository.IInviteRepository;
+import com.personal_date.gateway.repository.invite.InviteEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.*;

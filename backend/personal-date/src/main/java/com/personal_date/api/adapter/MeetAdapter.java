@@ -1,9 +1,9 @@
-package com.team3.personal_date.api.adapter;
+package com.personal_date.api.adapter;
 
-import com.team3.personal_date.api.dto.MeetRequest;
-import com.team3.personal_date.api.dto.MeetResponse;
-import com.team3.personal_date.core.entity.Meet;
-import com.team3.personal_date.gateway.repository.meet.MeetEntity;
+import com.personal_date.api.dto.MeetRequest;
+import com.personal_date.api.dto.MeetResponse;
+import com.personal_date.core.entity.Meet;
+import com.personal_date.gateway.repository.meet.MeetEntity;
 
 import java.util.List;
 

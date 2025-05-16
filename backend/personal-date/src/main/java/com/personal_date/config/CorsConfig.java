@@ -1,4 +1,4 @@
-package com.team3.personal_date.config;
+package com.personal_date.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

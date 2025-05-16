@@ -1,6 +1,6 @@
-package com.team3.personal_date.gateway.repository.client;
+package com.personal_date.gateway.repository.client;
 
-import com.team3.personal_date.gateway.repository.IClientRepository;
+import com.personal_date.gateway.repository.IClientRepository;
 import org.springframework.stereotype.Component;
 
 @Component

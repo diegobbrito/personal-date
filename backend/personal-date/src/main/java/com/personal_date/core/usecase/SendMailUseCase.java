@@ -1,9 +1,9 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.core.entity.Invite;
-import com.team3.personal_date.core.entity.Meet;
-import com.team3.personal_date.core.exception.MailNotSendException;
-import com.team3.personal_date.core.exception.MeetNotFoundException;
+import com.personal_date.core.entity.Invite;
+import com.personal_date.core.entity.Meet;
+import com.personal_date.core.exception.MailNotSendException;
+import com.personal_date.core.exception.MeetNotFoundException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;

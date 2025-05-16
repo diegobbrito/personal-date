@@ -1,6 +1,6 @@
-package com.team3.personal_date.core.entity;
+package com.personal_date.core.entity;
 
-import com.team3.personal_date.core.valueobject.Mail;
+import com.personal_date.core.valueobject.Mail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

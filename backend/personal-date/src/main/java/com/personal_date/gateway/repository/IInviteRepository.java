@@ -1,7 +1,7 @@
-package com.team3.personal_date.gateway.repository;
+package com.personal_date.gateway.repository;
 
-import com.team3.personal_date.core.entity.Invite;
-import com.team3.personal_date.gateway.repository.invite.InviteEntity;
+import com.personal_date.core.entity.Invite;
+import com.personal_date.gateway.repository.invite.InviteEntity;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.team3.personal_date.core.exception;
+package com.personal_date.core.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

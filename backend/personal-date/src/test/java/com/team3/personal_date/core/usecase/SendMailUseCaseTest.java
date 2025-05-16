@@ -1,10 +1,10 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.core.entity.Client;
-import com.team3.personal_date.core.entity.Invite;
-import com.team3.personal_date.core.entity.Meet;
-import com.team3.personal_date.core.exception.MailNotSendException;
-import com.team3.personal_date.core.valueobject.Mail;
+import com.personal_date.core.entity.Client;
+import com.personal_date.core.entity.Invite;
+import com.personal_date.core.entity.Meet;
+import com.personal_date.core.exception.MailNotSendException;
+import com.personal_date.core.valueobject.Mail;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.team3.personal_date.api.handler;
+package com.personal_date.api.handler;
 
 import lombok.Getter;
 

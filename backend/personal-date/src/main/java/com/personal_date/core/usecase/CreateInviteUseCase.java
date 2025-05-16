@@ -1,9 +1,9 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.api.adapter.InviteAdapter;
-import com.team3.personal_date.api.dto.CreateInviteRequest;
-import com.team3.personal_date.core.exception.MeetNotFoundException;
-import com.team3.personal_date.gateway.repository.IInviteRepository;
+import com.personal_date.api.adapter.InviteAdapter;
+import com.personal_date.api.dto.CreateInviteRequest;
+import com.personal_date.core.exception.MeetNotFoundException;
+import com.personal_date.gateway.repository.IInviteRepository;
 import org.springframework.stereotype.Service;
 
 

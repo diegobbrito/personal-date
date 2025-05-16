@@ -1,6 +1,6 @@
-package com.team3.personal_date.core.usecase;
+package com.personal_date.core.usecase;
 
-import com.team3.personal_date.api.dto.InviteResponse;
+import com.personal_date.api.dto.InviteResponse;
 
 import java.util.List;
 import java.util.UUID;

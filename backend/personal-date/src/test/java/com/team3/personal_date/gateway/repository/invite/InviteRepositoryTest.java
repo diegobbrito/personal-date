@@ -1,14 +1,14 @@
-package com.team3.personal_date.gateway.repository.invite;
+package com.personal_date.gateway.repository.invite;
 
-import com.team3.personal_date.api.adapter.MeetAdapter;
-import com.team3.personal_date.core.entity.Client;
-import com.team3.personal_date.core.entity.Invite;
+import com.personal_date.api.adapter.MeetAdapter;
+import com.personal_date.core.entity.Client;
+import com.personal_date.core.entity.Invite;
 
-import com.team3.personal_date.core.entity.Meet;
-import com.team3.personal_date.core.exception.ClientNotFoundException;
-import com.team3.personal_date.core.valueobject.Mail;
-import com.team3.personal_date.gateway.repository.client.ClientEntity;
-import com.team3.personal_date.gateway.repository.client.JpaClientRepository;
+import com.personal_date.core.entity.Meet;
+import com.personal_date.core.exception.ClientNotFoundException;
+import com.personal_date.core.valueobject.Mail;
+import com.personal_date.gateway.repository.client.ClientEntity;
+import com.personal_date.gateway.repository.client.JpaClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
